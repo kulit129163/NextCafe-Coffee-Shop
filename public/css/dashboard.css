@@ -55,6 +55,9 @@ body {
     max-width: 160px;
     height: auto;
     display: block;
+    mix-blend-mode: screen;
+    /* Removes white background and blends with brown sidebar */
+    filter: brightness(1.1);
 }
 
 .sidebar-nav {

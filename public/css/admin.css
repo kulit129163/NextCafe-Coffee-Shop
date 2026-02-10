@@ -49,15 +49,17 @@ body {
     padding: 2rem 1.5rem;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    /* Keep between for toggle */
+    justify-content: center;
     margin-bottom: 1rem;
 }
 
 .brand-logo {
-    max-width: 150px;
+    max-width: 160px;
     height: auto;
     display: block;
+    mix-blend-mode: screen;
+    /* Removes white background and blends with brown sidebar */
+    filter: brightness(1.1);
 }
 
 .sidebar-brand h2 {
