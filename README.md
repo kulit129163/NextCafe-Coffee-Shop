@@ -1,68 +1,151 @@
-# CodeIgniter 4 Application Starter
+# ☕ NextCafe Coffee Shop
 
-## What is CodeIgniter?
+A modern e-commerce coffee shop management system built with CodeIgniter 4.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## 📋 Overview
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+NextCafe is a full-featured coffee shop web application that allows customers to browse products, manage their cart and wishlist, place orders, and track order history. Administrators can manage products, categories, inventory, and view sales analytics through a comprehensive dashboard.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## ✨ Features
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### Customer Features
+- 🛍️ Product browsing with search, filter, and sort functionality
+- 🛒 Shopping cart management
+- ❤️ Wishlist functionality
+- 📦 Order placement and tracking
+- ⭐ Product reviews and ratings
+- 👤 User profile management
+- 📱 Responsive mobile-friendly design
 
-## Installation & updates
+### Admin Features
+- 📊 Analytics dashboard with sales insights
+- 🍰 Product and category management
+- 📦 Inventory tracking
+- 📈 Order management
+- 👥 Customer tracking
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+## 🚀 Getting Started
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### Prerequisites
+- PHP 8.1 or higher
+- MySQL 5.7+ or MariaDB
+- Composer
+- Web server (Apache/Nginx)
 
-## Setup
+### Installation
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/kulit129163/NextCafe-Coffee-Shop.git
+   cd NextCafe-Coffee-Shop
+   ```
 
-## Important Change with index.php
+2. **Install dependencies**
+   ```bash
+   composer install
+   ```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+3. **Configure environment**
+   ```bash
+   cp env .env
+   ```
+   
+   Edit `.env` and configure your database settings:
+   ```env
+   database.default.hostname = localhost
+   database.default.database = nextcafe_ecomms
+   database.default.username = your_username
+   database.default.password = your_password
+   database.default.DBDriver = MySQLi
+   ```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+4. **Import database**
+   ```bash
+   mysql -u your_username -p nextcafe_ecomms < nextcafe_ecomms.sql
+   ```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+5. **Run migrations** (if needed)
+   ```bash
+   php spark migrate
+   ```
 
-## Repository Management
+6. **Start development server**
+   ```bash
+   php spark serve
+   ```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+7. **Access the application**
+   - Customer: http://localhost:8080
+   - Admin: http://localhost:8080/admin
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+## 🛠️ Technologies
 
-## Server Requirements
+- **Backend Framework:** CodeIgniter 4
+- **Language:** PHP 8.1+
+- **Database:** MySQL
+- **Frontend:** HTML5, CSS3, JavaScript
+- **Styling:** Bootstrap 5, Custom CSS
+- **Version Control:** Git
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+## 📁 Project Structure
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+```
+NextCafe-Coffee-Shop/
+├── app/
+│   ├── Controllers/     # Application controllers
+│   ├── Models/          # Database models
+│   ├── Views/           # View templates
+│   └── Config/          # Configuration files
+├── public/              # Public assets (CSS, JS, images)
+├── writable/            # Logs and cache
+├── vendor/              # Composer dependencies
+└── .env                 # Environment configuration
+```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+## 🔧 Configuration
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+### Database Setup
+Ensure your `.env` file contains the correct database credentials. You can use the provided `nextcafe_ecomms.sql` file to set up the initial database schema.
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+### Base URL
+Update the base URL in `.env`:
+```env
+app.baseURL = 'http://localhost:8080'
+```
+
+## 📝 Server Requirements
+
+- PHP version 8.1 or higher
+- Required PHP extensions:
+  - `intl`
+  - `mbstring`
+  - `json`
+  - `mysqlnd` (for MySQL)
+  - `libcurl`
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [CodeIgniter 4](https://codeigniter.com/)
+- UI inspired by modern e-commerce design patterns
+
+## 📞 Support
+
+For support, please open an issue in the GitHub repository or contact the development team.
+
+---
+
+**NextCafe Coffee Shop** - Brewed with ❤️ and ☕
