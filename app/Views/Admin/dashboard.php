@@ -34,17 +34,18 @@
                 </span>
                 Customers
             </a>
-            <a href="#" class="nav-link">
+            <a href="#orders" class="nav-link">
                 <span class="icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                 </span>
                 Orders
             </a>
-            <a href="#" class="nav-link">
+
+            <a href="<?= site_url('customer/dashboard') ?>" class="nav-link" style="margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem;">
                 <span class="icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
                 </span>
-                Users
+                Back to Site
             </a>
 
             <a href="javascript:void(0)" onclick="confirmLogout('<?= site_url('logout') ?>')" class="nav-link" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
@@ -62,8 +63,8 @@
         <div class="header-top">
             <h1>Dashboard</h1>
             <div class="user-meta">
-                <span>Welcome, <?= esc($user->username) ?></span>
-                <div class="user-avatar"><?= strtoupper(substr($user->username, 0, 1)) ?></div>
+                <span>Welcome, <?= esc($user->username ?? 'Guest Admin') ?></span>
+                <div class="user-avatar"><?= strtoupper(substr($user->username ?? 'G', 0, 1)) ?></div>
             </div>
         </div>
 
@@ -148,8 +149,8 @@
             </div>
         </div>
 
-        <!-- Recent Activity (Optional but good for store owners) -->
-        <div class="menu-section" style="margin-top: 4rem;">
+        <!-- Recent Activity (Orders section) -->
+        <div class="menu-section" id="orders" style="margin-top: 4rem;">
             <div class="section-header">
                 <h2>Recent Orders</h2>
             </div>

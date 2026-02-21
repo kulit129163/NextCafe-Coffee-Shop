@@ -41,6 +41,7 @@ $routes->post('customer/wishlist/remove', 'Customer::removeFromWishlist');
 $routes->post('customer/review/submit', 'Customer::submitReview');
 $routes->post('customer/review/delete/(:num)', 'Customer::deleteReview/$1');
 
+$routes->get('admin', 'Admin::dashboard');
 $routes->get('admin/dashboard', 'Admin::dashboard');
 $routes->get('admin/profile', 'Admin::profile');
 $routes->get('admin/delete/(:num)', 'Admin::deleteUser/$1');
@@ -58,5 +59,6 @@ $routes->post('admin/orders/update', 'Admin::updateOrderStatus');
 $routes->get('testdb', 'TestDB::index');
 $routes->get('send-email', 'EmailController::send');
 $routes->get('logout', 'Customer::logout');
+$routes->get('fix-admin', 'FixAdmin::index');
 
 

@@ -52,6 +52,15 @@
                 </span>
                 Contact Us
             </a>
+
+            <?php if (session()->get('role') === 'admin'): ?>
+                <a href="<?= base_url('admin/dashboard') ?>" class="nav-link" style="background: rgba(212, 165, 116, 0.1); border-left: 3px solid #d4a574; margin-top: 1rem;">
+                    <span class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    </span>
+                    Admin Dashboard
+                </a>
+            <?php endif; ?>
             
             <a href="javascript:void(0)" onclick="confirmLogout('<?= base_url('customer/logout') ?>')" class="nav-link" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
                 <span class="icon">

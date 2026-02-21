@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
                 'username'   => 'admin',
                 'email'      => 'admin@example.com',
                 'password'   => password_hash('admin123', PASSWORD_DEFAULT),
+                'role'       => 'admin',
                 'picture'    => 'default.png',
                 'bio'        => 'I am the administrator.',
                 'created_at' => date('Y-m-d H:i:s'),
