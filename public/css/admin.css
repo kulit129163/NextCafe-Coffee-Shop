@@ -5,19 +5,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --side-bg: #1e1e2d;
-    --side-hover: #2b2b40;
-    --side-active: #009ef7;
-    --main-bg: #f5f8fa;
+    --side-bg: #422c1d;
+    --side-hover: #5d3f2a;
+    --side-active: #d4a574;
+    --main-bg: #fffaf0;
     --white: #ffffff;
-    --text-dark: #181c32;
-    --text-muted: #a1a5b7;
-    --primary: #009ef7;
-    --success: #50cd89;
+    --text-dark: #1a1a1a;
+    --text-muted: #888;
+    --primary: #d4a574;
+    --success: #2e7d32;
     --warning: #ffc700;
     --danger: #f1416c;
-    --shadow: 0 0 20px 0 rgba(76, 87, 125, 0.02);
-    --border: #eff2f5;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --border: #f0e6d2;
 }
 
 * {
@@ -50,23 +50,19 @@ body {
 }
 
 .sidebar-brand {
-    padding: 2.5rem 1.5rem;
+    padding: 2rem 1.5rem;
     display: flex;
     align-items: center;
-    gap: 0.8rem;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
 
-.sidebar-brand h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.sidebar-brand i {
-    color: var(--primary);
+.brand-logo {
+    max-width: 160px;
+    height: auto;
+    display: block;
+    mix-blend-mode: screen;
+    filter: brightness(1.1);
 }
 
 .sidebar-nav {

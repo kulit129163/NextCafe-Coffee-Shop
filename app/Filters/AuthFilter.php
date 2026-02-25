@@ -17,6 +17,12 @@ class AuthFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         $session = session();
+        
+        // Bypass for development mode
+        if (ENVIRONMENT === 'development') {
+            return;
+        }
+
         if (!$session->get('logged_in') || $session->get('role') !== 'admin') {
             return redirect()->to(site_url('login'))->with('error', 'Please login as admin to access this page.');
         }

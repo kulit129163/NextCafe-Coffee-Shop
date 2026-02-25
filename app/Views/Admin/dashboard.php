@@ -28,17 +28,17 @@
 
         <div class="content-container">
             <div class="dashboard-stats" style="grid-template-columns: repeat(4, 1fr);">
-                <div class="stat-card" style="background: #ffffff; color: #181c32; border: 1px solid var(--border);">
+                <div class="stat-card" style="background: var(--white); color: var(--text-dark); border: 1px solid var(--border);">
                     <div>
                         <div class="label" style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Revenue</div>
-                        <div class="value" style="font-size: 1.5rem; color: #181c32;">₱<?= number_format($total_revenue, 2) ?></div>
+                        <div class="value" style="font-size: 1.5rem; color: var(--text-dark);">₱<?= number_format($total_revenue, 2) ?></div>
                     </div>
                 </div>
 
-                <div class="stat-card" style="background: #ffffff; color: #181c32; border: 1px solid var(--border);">
+                <div class="stat-card" style="background: var(--white); color: var(--text-dark); border: 1px solid var(--border);">
                     <div>
                         <div class="label" style="color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase;">Orders</div>
-                        <div class="value" style="font-size: 1.5rem; color: #181c32;"><?= $total_orders ?></div>
+                        <div class="value" style="font-size: 1.5rem; color: var(--text-dark);"><?= $total_orders ?></div>
                     </div>
                     <a href="<?= base_url('admin/orders') ?>" class="view-link" style="color: var(--primary);">View All &rarr;</a>
                 </div>

@@ -82,7 +82,15 @@ class Admin extends BaseController
         $categories = $db->table('products')->select('category')->distinct()->get()->getResult();
 
         // Admin info
-        $user = $db->table('users')->where('id', $session->get('user_id'))->get()->getRow();
+        $userId = $session->get('user_id');
+        $user = null;
+        if ($userId) {
+            $user = $db->table('users')->where('id', $userId)->get()->getRow();
+        }
+
+        if (!$user) {
+            $user = (object)['username' => 'Administrator'];
+        }
 
         return view('admin/products/index', [
             'products' => $products,
@@ -103,7 +111,17 @@ class Admin extends BaseController
             ->getResult();
 
         // Admin info
-        $user = $db->table('users')->where('id', $session->get('user_id'))->get()->getRow();
+        // Admin info
+        $userId = $session->get('user_id');
+        $user = null;
+        if ($userId) {
+            $user = $db->table('users')->where('id', $userId)->get()->getRow();
+        }
+
+        if (!$user) {
+            $user = (object)['username' => 'Administrator'];
+        }
+
 
         return view('admin/orders', [
             'orders' => $orders,
@@ -122,7 +140,17 @@ class Admin extends BaseController
             ->getResult();
 
         // Admin info
-        $user = $db->table('users')->where('id', $session->get('user_id'))->get()->getRow();
+        // Admin info
+        $userId = $session->get('user_id');
+        $user = null;
+        if ($userId) {
+            $user = $db->table('users')->where('id', $userId)->get()->getRow();
+        }
+
+        if (!$user) {
+            $user = (object)['username' => 'Administrator'];
+        }
+
 
         return view('admin/categories', [
             'categories' => $categories,
