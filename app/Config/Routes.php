@@ -11,35 +11,40 @@ $routes->get('/', 'Auth::login');
 $routes->get('login', 'Auth::login');
 $routes->post('login', 'Auth::loginSubmit');
 
+$routes->get('admin/login', 'Auth::adminLogin');
+$routes->post('admin/login', 'Auth::adminLoginSubmit');
+
 $routes->get('register', 'Auth::register');
 $routes->post('register', 'Auth::registerSubmit');
 
-$routes->get('customer/logout', 'Auth::logout');
-$routes->get('customer/dashboard', 'Customer::dashboard');
-$routes->get('customer/profile', 'Customer::profile');
-$routes->get('customer/product/(:segment)', 'Customer::viewProduct/$1');
-$routes->get('customer/coffee/(:num)', 'Customer::selectCoffee/$1');
-$routes->get('customer/menu', 'Customer::menu');
-$routes->get('customer/cart', 'Customer::cart');
-$routes->get('customer/orders', 'Customer::orders');
-$routes->get('customer/order/(:num)', 'Customer::orderDetail/$1');
-$routes->get('customer/contact', 'Customer::contact');
-$routes->get('customer/about', 'Customer::about');
+$routes->group('customer', ['filter' => 'customer_auth'], function($routes) {
+    $routes->get('logout', 'Auth::logout');
+    $routes->get('dashboard', 'Customer::dashboard');
+    $routes->get('profile', 'Customer::profile');
+    $routes->get('product/(:segment)', 'Customer::viewProduct/$1');
+    $routes->get('coffee/(:num)', 'Customer::selectCoffee/$1');
+    $routes->get('menu', 'Customer::menu');
+    $routes->get('cart', 'Customer::cart');
+    $routes->get('orders', 'Customer::orders');
+    $routes->get('order/(:num)', 'Customer::orderDetail/$1');
+    $routes->get('contact', 'Customer::contact');
+    $routes->get('about', 'Customer::about');
 
-$routes->post('customer/add_to_cart', 'Customer::add_to_cart');
-$routes->post('customer/update_cart', 'Customer::update_cart');
-$routes->post('customer/remove_from_cart', 'Customer::remove_from_cart');
-$routes->post('customer/clear_cart', 'Customer::clear_cart');
-$routes->post('customer/checkout', 'Customer::checkout');
+    $routes->post('add_to_cart', 'Customer::add_to_cart');
+    $routes->post('update_cart', 'Customer::update_cart');
+    $routes->post('remove_from_cart', 'Customer::remove_from_cart');
+    $routes->post('clear_cart', 'Customer::clear_cart');
+    $routes->post('checkout', 'Customer::checkout');
 
-// Wishlist routes
-$routes->get('customer/wishlist', 'Customer::wishlist');
-$routes->post('customer/wishlist/add', 'Customer::addToWishlist');
-$routes->post('customer/wishlist/remove', 'Customer::removeFromWishlist');
+    // Wishlist routes
+    $routes->get('wishlist', 'Customer::wishlist');
+    $routes->post('wishlist/add', 'Customer::addToWishlist');
+    $routes->post('wishlist/remove', 'Customer::removeFromWishlist');
 
-// Review routes
-$routes->post('customer/review/submit', 'Customer::submitReview');
-$routes->post('customer/review/delete/(:num)', 'Customer::deleteReview/$1');
+    // Review routes
+    $routes->post('review/submit', 'Customer::submitReview');
+    $routes->post('review/delete/(:num)', 'Customer::deleteReview/$1');
+});
 
 $routes->group('admin', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'Admin::dashboard');

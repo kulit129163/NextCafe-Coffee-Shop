@@ -13,6 +13,7 @@
         <!-- Left Side: Coffee Photography -->
         <div class="side-panel">
             <div class="welcome-text">
+                <img src="<?= base_url('images/logo.png') ?>" alt="NextCafe" style="max-width: 180px; margin-bottom: 2rem; filter: brightness(0) invert(1);">
                 <h1>Welcome to website</h1>
                 <p>Starvan Coffee brings you the finest beans and crafting every cup with passion. Login to explore our premium collection.</p>
             </div>
@@ -57,6 +58,7 @@
 
                 <div class="register-link">
                     <p>Don't have account? <a href="<?= base_url('register') ?>">Register Now</a></p>
+                    <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">Admin access? <a href="<?= base_url('admin/login') ?>">Login here</a></p>
                 </div>
             </form>
             

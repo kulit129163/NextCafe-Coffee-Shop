@@ -85,19 +85,17 @@ class Auth extends BaseController
         $email = $this->request->getPost('email');
         $passwordInput = $this->request->getPost('password');
 
-        // Get user by email only
         $user = $db->table('users')
             ->where('email', $email)
+            ->where('role', 'customer') // Only allow customers here
             ->get()
             ->getRow();
 
         if ($user) {
             $valid = false;
-
-            // Check password type
-            if (strlen($user->password) == 32) { // MD5 for old customers
+            if (strlen($user->password) == 32) {
                 $valid = md5($passwordInput) === $user->password;
-            } else { // bcrypt for admin or new users
+            } else {
                 $valid = password_verify($passwordInput, $user->password);
             }
 
@@ -113,15 +111,9 @@ class Auth extends BaseController
 
                 $session->setFlashdata('login_success', 'Login successful! Welcome back, ' . $user->username . '.');
 
-                if ($user->role == 'admin') {
-                    $redirectUrl = '/admin/dashboard';
-                } else {
-                    $redirectUrl = '/customer/dashboard';
-                }
-
                 return view('auth/login', [
                     'login_success' => true,
-                    'redirect_url' => $redirectUrl,
+                    'redirect_url' => '/customer/dashboard',
                     'user_name' => $user->username
                 ]);
             }
@@ -130,10 +122,63 @@ class Auth extends BaseController
         return view('auth/login', ['error' => 'Invalid email or password']);
     }
 
+    public function adminLogin()
+    {
+        return view('auth/admin_login');
+    }
+
+    public function adminLoginSubmit()
+    {
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'email' => 'required|valid_email',
+            'password' => 'required'
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return view('auth/admin_login', ['validation' => $validation]);
+        }
+
+        $db = \Config\Database::connect();
+        $email = $this->request->getPost('email');
+        $passwordInput = $this->request->getPost('password');
+
+        $user = $db->table('users')
+            ->where('email', $email)
+            ->where('role', 'admin') // Only allow admins here
+            ->get()
+            ->getRow();
+
+        if ($user) {
+            if (password_verify($passwordInput, $user->password)) {
+                $session = session();
+                $session->set([
+                    'user_id' => $user->id,
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                    'logged_in' => true
+                ]);
+
+                $session->setFlashdata('login_success', 'Login successful! Welcome to Admin Panel.');
+
+                return view('auth/admin_login', [
+                    'login_success' => true,
+                    'redirect_url' => '/admin/dashboard',
+                    'user_name' => $user->username
+                ]);
+            }
+        }
+
+        return view('auth/admin_login', ['error' => 'Invalid admin credentials or access denied']);
+    }
+
     public function logout()
     {
+        $role = session()->get('role');
         session()->destroy();
         session()->setFlashdata('success', 'Logged out successfully');
-        return redirect()->to('/login');
+        
+        return $role === 'admin' ? redirect()->to('/admin/login') : redirect()->to('/login');
     }
 }
