@@ -1,0 +1,100 @@
+diff --git a/Remove-LogoBackground.ps1 b/Remove-LogoBackground.ps1
+deleted file mode 100644
+index d09248c..0000000
+--- a/Remove-LogoBackground.ps1
++++ /dev/null
+@@ -1,36 +0,0 @@
+-Add-Type -AssemblyName System.Drawing
+-
+-$inputPath = "public\images\logo.png"
+-$outputPath = "public\images\logo.png"
+-$backupPath = "public\images\logo_with_background.png"
+-
+-if (-not (Test-Path $backupPath)) {
+-    Copy-Item $inputPath $backupPath -Force
+-    Write-Host "Backup created: $backupPath"
+-}
+-
+-$bitmap = [System.Drawing.Bitmap]::FromFile((Resolve-Path $inputPath))
+-$newBitmap = New-Object System.Drawing.Bitmap($bitmap.Width, $bitmap.Height)
+-
+-for ($y = 0; $y -lt $bitmap.Height; $y++) {
+-    for ($x = 0; $x -lt $bitmap.Width; $x++) {
+-        $pixel = $bitmap.GetPixel($x, $y)
+-        
+-        $isBrown = ($pixel.R -lt 120) -and ($pixel.G -lt 100) -and ($pixel.B -lt 85) -and ($pixel.R -gt $pixel.B)
+-        
+-        if ($isBrown) {
+-            $transparent = [System.Drawing.Color]::FromArgb(0, 0, 0, 0)
+-            $newBitmap.SetPixel($x, $y, $transparent)
+-        }
+-        else {
+-            $newBitmap.SetPixel($x, $y, $pixel)
+-        }
+-    }
+-    if ($y % 100 -eq 0) { Write-Host "Progress: $y / $($bitmap.Height)" }
+-}
+-
+-$bitmap.Dispose()
+-$newBitmap.Save((Resolve-Path $outputPath), [System.Drawing.Imaging.ImageFormat]::Png)
+-$newBitmap.Dispose()
+-
+-Write-Host "Done! Background removed from logo.png"
+diff --git a/public/images/logo.png b/public/images/logo.png
+index 24038f4..f9e8cae 100644
+Binary files a/public/images/logo.png and b/public/images/logo.png differ
+diff --git a/public/images/logo_with_background.png b/public/images/logo_with_background.png
+deleted file mode 100644
+index da268e0..0000000
+Binary files a/public/images/logo_with_background.png and /dev/null differ
+diff --git a/remove_background.py b/remove_background.py
+deleted file mode 100644
+index 606917f..0000000
+--- a/remove_background.py
++++ /dev/null
+@@ -1,45 +0,0 @@
+-from PIL import Image
+-import os
+-
+-# Paths
+-input_path = r'public\images\logo.png'
+-output_path = r'public\images\logo.png'
+-backup_path = r'public\images\logo_with_background.png'
+-
+-# Load the image
+-img = Image.open(input_path)
+-img = img.convert("RGBA")
+-
+-# Get image data
+-datas = img.getdata()
+-
+-# Create new image data with transparency
+-new_data = []
+-for item in datas:
+-    # Check if pixel is brownish (the background color)
+-    # Brown background has RGB values around (60-90, 40-60, 30-50)
+-    # We'll make these pixels transparent
+-    r, g, b, a = item
+-    
+-    # If the pixel is brown-ish (background color), make it transparent
+-    # Adjust these thresholds based on the actual background color
+-    if r < 120 and g < 100 and b < 80 and (r > g) and (g > b * 0.8):
+-        # Make it fully transparent
+-        new_data.append((255, 255, 255, 0))
+-    else:
+-        # Keep the original pixel
+-        new_data.append(item)
+-
+-# Update image data
+-img.putdata(new_data)
+-
+-# Save backup of original
+-if not os.path.exists(backup_path):
+-    original = Image.open(input_path)
+-    original.save(backup_path)
+-    print(f"Backup saved to: {backup_path}")
+-
+-# Save the new image
+-img.save(output_path, "PNG")
+-print(f"Background removed! New logo saved to: {output_path}")
+-print("The original logo has been backed up as logo_with_background.png")
