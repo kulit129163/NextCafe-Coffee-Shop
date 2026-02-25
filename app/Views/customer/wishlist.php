@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Wishlist - Starvan Coffee</title>
+    <title>My Wishlist - NextCafe</title>
     <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/wishlist.css') ?>">
 </head>

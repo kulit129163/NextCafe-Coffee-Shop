@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - Starvan Coffee</title>
+    <title>Register - NextCafe</title>
     <link rel="stylesheet" href="<?= base_url('css/register.css') ?>">
 </head>
 
@@ -13,7 +13,7 @@
         <!-- Left Side: Coffee Photography -->
         <div class="side-panel">
             <div class="welcome-text">
-                <h1>Join the Starvan community</h1>
+                <h1>Join the NextCafe community</h1>
                 <p>Register to unlock exclusive offers, track your coffee orders, and discover new premium blends curated just for you.</p>
             </div>
         </div>

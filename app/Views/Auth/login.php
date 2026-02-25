@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Starvan Coffee</title>
+    <title>Login - NextCafe</title>
     <link rel="stylesheet" href="<?= base_url('css/login.css') ?>">
 </head>
 
@@ -15,7 +15,7 @@
             <div class="welcome-text">
                 <img src="<?= base_url('images/logo.png') ?>" alt="NextCafe" style="max-width: 180px; margin-bottom: 2rem; filter: brightness(0) invert(1);">
                 <h1>Welcome to website</h1>
-                <p>Starvan Coffee brings you the finest beans and crafting every cup with passion. Login to explore our premium collection.</p>
+                <p>NextCafe brings you the finest beans and crafting every cup with passion. Login to explore our premium collection.</p>
             </div>
         </div>
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($product->product_name) ?> - Starvan Coffee</title>
+    <title><?= esc($product->product_name) ?> - NextCafe</title>
     <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/menu.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/reviews.css') ?>">

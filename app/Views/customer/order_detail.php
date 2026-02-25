@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order #<?= $order->id ?> - Starvan Coffee</title>
+    <title>Order #<?= $order->id ?> - NextCafe</title>
     <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
     <style>
         .detail-container { max-width: 800px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }

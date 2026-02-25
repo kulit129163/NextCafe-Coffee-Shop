@@ -28,6 +28,7 @@
                     <option value="Milk Based">Milk Based</option>
                     <option value="Cold Brew">Cold Brew</option>
                     <option value="Pastries">Pastries</option>
+                    <option value="Frappe">Frappe</option>
                 </select>
             </div>
             <div class="form-group">

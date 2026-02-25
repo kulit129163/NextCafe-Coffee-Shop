@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Starvan Coffee</title>
+    <title>Contact Us - NextCafe</title>
     <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/menu.css') ?>">
     <style>
@@ -312,7 +312,7 @@
                         <div class="info-icon">✉️</div>
                         <div class="info-text">
                             <h4>Email Address</h4>
-                            <p>hello@starvancoffee.ph</p>
+                            <p>hello@nextcafe.ph</p>
                         </div>
                     </div>
 

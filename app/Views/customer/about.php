@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Starvan Coffee</title>
+    <title>About Us - NextCafe</title>
     <link rel="stylesheet" href="<?= base_url('css/dashboard.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/menu.css') ?>">
     <style>
@@ -289,7 +289,7 @@
         <div class="about-wrapper">
             <div class="hero-banner">
                 <h1>Crafting moments, <br> One cup at a time.</h1>
-                <p>Welcome to Starvan Coffee, where passion meets perfection. We are dedicated to delivering the finest coffee experience, sourced ethically and brewed with love.</p>
+                <p>Welcome to NextCafe, where passion meets perfection. We are dedicated to delivering the finest coffee experience, sourced ethically and brewed with love.</p>
             </div>
 
             <div class="values-section">
@@ -315,8 +315,8 @@
                     <img src="<?= base_url('images/cappuccino.jpg') ?>" alt="Our Barista">
                 </div>
                 <div class="story-content">
-                    <h2>The Starvan Journey</h2>
-                    <p>Founded in 2024, Starvan Coffee began with a simple dream: to redefine the coffee experience. What started as a small corner shop has grown into a beloved destination for coffee lovers.</p>
+                    <h2>The NextCafe Journey</h2>
+                    <p>Founded in 2024, NextCafe began with a simple dream: to redefine the coffee experience. What started as a small corner shop has grown into a beloved destination for coffee lovers.</p>
                     <p>We believe that every cup tells a story. From the careful selection of cherry to the precise pour of the barista, we are obsessed with every detail. Come join us and be part of our story.</p>
                 </div>
             </div>

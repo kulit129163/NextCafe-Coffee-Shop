@@ -28,6 +28,7 @@
                     <option value="Milk Based" <?= $product->category == 'Milk Based' ? 'selected' : '' ?>>Milk Based</option>
                     <option value="Cold Brew" <?= $product->category == 'Cold Brew' ? 'selected' : '' ?>>Cold Brew</option>
                     <option value="Pastries" <?= $product->category == 'Pastries' ? 'selected' : '' ?>>Pastries</option>
+                    <option value="Frappe" <?= $product->category == 'Frappe' ? 'selected' : '' ?>>Frappe</option>
                 </select>
             </div>
             <div class="form-group">

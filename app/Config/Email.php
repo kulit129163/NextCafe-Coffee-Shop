@@ -12,7 +12,7 @@ class Email extends BaseConfig
     |--------------------------------------------------------------------
     */
     public string $fromEmail  = 'navarezvanryan1@gmail.com';
-    public string $fromName   = 'Starvan Coffee';
+    public string $fromName   = 'NextCafe';
     public string $recipients = '';
 
     /*

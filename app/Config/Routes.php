@@ -66,6 +66,8 @@ $routes->group('admin', ['filter' => 'auth'], function($routes) {
     // Admin Order Management
     $routes->get('orders', 'Admin::orders');
     $routes->post('orders/update', 'Admin::updateOrderStatus');
+    
+    $routes->get('logout', 'Auth::logout');
 });
 
 $routes->get('testdb', 'TestDB::index');
