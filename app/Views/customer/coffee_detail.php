@@ -464,6 +464,18 @@
             });
         }
     </script>
+    <!-- Toast Notification -->
+    <?php if (session()->getFlashdata('cart_message')): ?>
+        <div id="toast" class="toast-message show">
+            <?= session()->getFlashdata('cart_message') ?>
+        </div>
+        <script>
+            setTimeout(() => {
+                document.getElementById('toast').classList.remove('show');
+            }, 3000);
+        </script>
+    <?php endif; ?>
+
     <?php include(APPPATH . 'Views/partials/logout_modal.php'); ?>
 </body>
 

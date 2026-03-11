@@ -314,7 +314,7 @@ class Customer extends BaseController
         $session->set('cart', $cart);
 
         // Optional: flash message
-        return redirect()->back()->with('cart_message', "$product_name added to cart!");
+        return redirect()->back()->with('cart_message', "Product Added!");
     }
 
 
