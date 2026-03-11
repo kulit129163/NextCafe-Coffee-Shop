@@ -39,7 +39,14 @@
                     <span class="icon-label">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     </span>
-                    <input type="text" id="username" name="username" placeholder="Display Name" value="<?= old('username') ?>" required>
+                    <input type="text" id="fullname" name="fullname" placeholder="Full Name" value="<?= old('fullname') ?>" required>
+                </div>
+
+                <div class="form-group">
+                    <span class="icon-label">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                    </span>
+                    <input type="text" id="username" name="username" placeholder="Username" value="<?= old('username') ?>" required>
                 </div>
 
                 <div class="form-group">

@@ -64,7 +64,7 @@
 
                 <div class="register-link">
                     <p>Don't have account? <a href="<?= base_url('register') ?>">Register Now</a></p>
-                    <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">Admin access? <a href="<?= base_url('admin/login') ?>">Login here</a></p>
+
                 </div>
             </form>
             

@@ -23,6 +23,13 @@ class Auth extends BaseController
                     'is_unique' => 'Username already exists'
                 ]
             ],
+            'fullname' => [
+                'rules' => 'required|min_length[3]|max_length[100]',
+                'errors' => [
+                    'required' => 'Full Name is required',
+                    'min_length' => 'Full Name must be at least 3 characters'
+                ]
+            ],
             'email' => [
                 'rules' => 'required|valid_email|is_unique[users.email]',
                 'errors' => [
@@ -53,6 +60,7 @@ class Auth extends BaseController
 
         $db = \Config\Database::connect();
         $data = [
+            'name' => $this->request->getPost('fullname'),
             'username' => $this->request->getPost('username'),
             'email' => $this->request->getPost('email'),
             'password' => md5($this->request->getPost('password')), // keep MD5 for customers
