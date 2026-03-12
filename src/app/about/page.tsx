@@ -23,10 +23,10 @@ export default function AboutPage() {
               <span className="text-coffee-600">Passion & Beans</span>
             </h1>
             <p className="text-xl text-coffee-800/80 leading-relaxed mb-8">
-              Founded in 2024, NextCafe started with a simple mission: to bring the highest quality coffee experience to our community. Every cup we serve is a result of meticulous roasting and brewing.
+              Founded in 2026, NextCafe was born from the shared dreams of four young and talented students from FEU Institute of Technology. What started as a late-night idea during a coding session has blossomed into a real haven for coffee lovers. We built this not just as a shop, but as a testament to our passion for technology and great brewing.
             </p>
             <p className="text-lg text-coffee-700/70">
-              We believe that coffee is more than just a drink—it's a catalyst for conversation, creativity, and connection.
+              We believe that every line of code and every cup of coffee requires the same thing—patience, precision, and an undeniable love for the craft. NextCafe is our perfect blend of innovation and tradition, serving the community one perfect cup at a time.
             </p>
           </motion.div>
           <motion.div
@@ -68,6 +68,53 @@ export default function AboutPage() {
                 <p className="text-cream-300/80 leading-relaxed">{v.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Meet the Team */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+        <div className="text-center mb-20">
+          <h2 className="text-5xl font-black italic text-coffee-950 mb-4 tracking-tight">Meet the Team</h2>
+          <p className="text-coffee-600 font-medium">A young and talented students at FEU Institute of Technology</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Van Ryan */}
+          <div className="flex flex-col items-center group text-center">
+            <div className="w-48 h-48 rounded-full overflow-hidden shadow-2xl mb-6 border-4 border-white group-hover:scale-105 transition-transform duration-300 bg-cream-100">
+               {/* Using placeholder until you drop the original image here. Name it "vanryan.jpg" in public/images/team/ */}
+               <img src="/images/team/vanryan.jpg" alt="Navarez, Van Ryan" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=Van+Ryan&background=2D1B14&color=fff&size=200'; }} />
+            </div>
+            <p className="text-xs font-black uppercase text-coffee-400 tracking-widest mb-1">Back-End Developer</p>
+            <h3 className="text-xl font-black text-coffee-950">Navarez, Van Ryan</h3>
+          </div>
+
+          {/* Martin */}
+          <div className="flex flex-col items-center group text-center">
+            <div className="w-48 h-48 rounded-full overflow-hidden shadow-2xl mb-6 border-4 border-white group-hover:scale-105 transition-transform duration-300 bg-cream-100">
+               <img src="/images/team/martin.jpg" alt="Ore, Martin" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=Martin+Ore&background=2D1B14&color=fff&size=200'; }} />
+            </div>
+            <p className="text-xs font-black uppercase text-coffee-400 tracking-widest mb-1">Front-End Developer</p>
+            <h3 className="text-xl font-black text-coffee-950">Ore, Martin</h3>
+          </div>
+
+          {/* Jonell */}
+          <div className="flex flex-col items-center group text-center">
+            <div className="w-48 h-48 rounded-full overflow-hidden shadow-2xl mb-6 border-4 border-white group-hover:scale-105 transition-transform duration-300 bg-cream-100">
+               <img src="/images/team/jonell.jpg" alt="Paguinto, Jonell" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=Jonell+Paguinto&background=2D1B14&color=fff&size=200'; }} />
+            </div>
+            <p className="text-xs font-black uppercase text-coffee-400 tracking-widest mb-1">Project Lead</p>
+            <h3 className="text-xl font-black text-coffee-950">Paguinto, Jonell</h3>
+          </div>
+
+          {/* Saira */}
+          <div className="flex flex-col items-center group text-center">
+            <div className="w-48 h-48 rounded-full overflow-hidden shadow-2xl mb-6 border-4 border-white group-hover:scale-105 transition-transform duration-300 bg-cream-100">
+               <img src="/images/team/saira.jpg" alt="Salumbides, Saira Joyce" className="w-full h-full object-cover" onError={(e) => { e.currentTarget.src = 'https://ui-avatars.com/api/?name=Saira+Joyce&background=2D1B14&color=fff&size=200'; }} />
+            </div>
+            <p className="text-xs font-black uppercase text-coffee-400 tracking-widest mb-1">UI/UX Designer</p>
+            <h3 className="text-xl font-black text-coffee-950">Salumbides, Saira Joyce</h3>
           </div>
         </div>
       </section>
