@@ -16,8 +16,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
-    // Return user info (except password)
-    return NextResponse.json({ 
+    // Create response
+    const response = NextResponse.json({ 
       message: 'Login successful',
       user: {
         name: user.name,
@@ -25,6 +25,17 @@ export async function POST(req: NextRequest) {
         role: user.role
       }
     }, { status: 200 });
+
+    // Set secure cookie for middleware protection
+    response.cookies.set('user_role', user.role, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7 // 1 week
+    });
+
+    return response;
   } catch (error) {
     console.error('Login Error:', error);
     return NextResponse.json({ error: 'Login failed' }, { status: 500 });

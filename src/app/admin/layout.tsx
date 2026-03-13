@@ -9,16 +9,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    if (pathname === '/admin/login') {
-      setAuthorized(true);
-      return;
-    }
-
     const role = localStorage.getItem('user_role');
-    if (role !== 'admin') {
-      router.replace('/admin/login');
-    } else {
+    if (role === 'admin' || pathname === '/admin/login') {
       setAuthorized(true);
+    } else {
+      router.replace('/admin/login');
     }
   }, [pathname, router]);
 
