@@ -309,6 +309,16 @@ export default function ProductDetailPage() {
              </button>
           </div>
 
+          {/* Proceed to Cart */}
+          <Link 
+            href="/cart"
+            className="mt-6 w-full py-5 px-12 rounded-[2rem] font-black text-lg flex items-center justify-center space-x-4 bg-white border-2 border-[#C69276] text-[#C69276] hover:bg-[#C69276] hover:text-white transition-all shadow-lg hover:shadow-xl hover:shadow-[#C69276]/20 active:scale-95 group"
+          >
+            <ShoppingCart className="h-6 w-6 group-hover:animate-bounce" />
+            <span>Proceed to Cart</span>
+            <ArrowLeft className="h-5 w-5 rotate-180" />
+          </Link>
+
           {/* Features */}
           <div className="grid grid-cols-3 gap-4 mt-12 border-t border-coffee-50 pt-10">
              <div className="flex flex-col items-center text-center space-y-2">

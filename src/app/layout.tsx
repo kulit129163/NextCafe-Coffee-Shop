@@ -15,7 +15,7 @@ export default function RootLayout({
   const pathname = usePathname();
   
   // ITATAGO NATIN ANG SIDEBAR SA MGA PAGES NA ITO:
-  const isAuthPage = pathname === '/' || pathname === '/login' || pathname === '/register';
+  const isAuthPage = pathname === '/' || pathname === '/login' || pathname === '/register' || pathname === '/admin/login';
   const isAdminPath = pathname.startsWith('/admin');
 
   return (
