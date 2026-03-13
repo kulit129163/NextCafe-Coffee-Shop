@@ -31,7 +31,11 @@ export default function MenuPage() {
         const data = await res.json();
         
         // Safety: Siguraduhing laging array ang data
-        setProducts(Array.isArray(data) ? data : []);
+        let fetchedArray = Array.isArray(data) ? [...data] : [];
+        // Shuffle the array elements to satisfy "any order"
+        fetchedArray = fetchedArray.sort(() => Math.random() - 0.5);
+        
+        setProducts(fetchedArray);
       } catch (error) {
         console.error("Failed to fetch products", error);
         setProducts([]); // Fallback sa empty array para hindi mag-crash
