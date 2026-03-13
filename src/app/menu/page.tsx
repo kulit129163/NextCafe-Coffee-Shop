@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { Search, Coffee, Cookie, CupSoda, LayoutGrid, Loader2 } from 'lucide-react';
+import { Search, Coffee, Cookie, CupSoda, LayoutGrid, Loader2, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
 import ProductCard from '@/components/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -19,6 +19,8 @@ export default function MenuPage() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
+  const [priceRange, setPriceRange] = useState('all');
+  const [sortBy, setSortBy] = useState('default');
 
   useEffect(() => {
     async function fetchProducts() {
@@ -40,9 +42,21 @@ export default function MenuPage() {
     fetchProducts();
   }, [filter]);
 
-  const filteredProducts = products.filter(p => 
-    p.name?.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredProducts = products
+    .filter(p => p.name?.toLowerCase().includes(search.toLowerCase()))
+    .filter(p => {
+      const price = Number(p.price);
+      if (priceRange === 'under100') return price < 100;
+      if (priceRange === '100to150') return price >= 100 && price <= 150;
+      if (priceRange === 'over150') return price > 150;
+      return true;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'price-asc') return Number(a.price) - Number(b.price);
+      if (sortBy === 'price-desc') return Number(b.price) - Number(a.price);
+      if (sortBy === 'name') return a.name.localeCompare(b.name);
+      return 0;
+    });
 
   const categories = [
     { id: 'all', label: 'All Items', icon: LayoutGrid },
@@ -76,7 +90,7 @@ export default function MenuPage() {
       </div>
 
       {/* Categories */}
-      <div className="flex flex-wrap gap-4 mb-12">
+      <div className="flex flex-wrap gap-4 mb-6">
         {categories.map((cat) => (
           <button
             key={cat.id}
@@ -91,6 +105,39 @@ export default function MenuPage() {
             <span>{cat.label}</span>
           </button>
         ))}
+      </div>
+
+      {/* Filters & Sort */}
+      <div className="flex flex-wrap items-center gap-4 mb-12">
+        <div className="flex items-center space-x-2 bg-white border border-coffee-50 rounded-2xl px-5 py-3">
+          <SlidersHorizontal className="h-4 w-4 text-coffee-300" />
+          <select
+            value={priceRange}
+            onChange={(e) => setPriceRange(e.target.value)}
+            className="bg-transparent outline-none text-sm font-bold text-coffee-700 cursor-pointer"
+          >
+            <option value="all">All Prices</option>
+            <option value="under100">Under ₱100</option>
+            <option value="100to150">₱100 - ₱150</option>
+            <option value="over150">Over ₱150</option>
+          </select>
+        </div>
+        <div className="flex items-center space-x-2 bg-white border border-coffee-50 rounded-2xl px-5 py-3">
+          <ArrowUpDown className="h-4 w-4 text-coffee-300" />
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="bg-transparent outline-none text-sm font-bold text-coffee-700 cursor-pointer"
+          >
+            <option value="default">Default</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="name">Name: A-Z</option>
+          </select>
+        </div>
+        <span className="text-sm text-coffee-400 font-medium ml-auto">
+          {filteredProducts.length} item{filteredProducts.length !== 1 ? 's' : ''} found
+        </span>
       </div>
 
       {/* Main Grid */}

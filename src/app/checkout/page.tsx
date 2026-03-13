@@ -200,15 +200,40 @@ export default function CheckoutPage() {
                     </div>
                   </label>
 
-                  <label className={`cursor-pointer border-2 p-6 rounded-2xl flex items-center space-x-4 opacity-50 transition-all border-coffee-50`}>
-                    <input type="radio" name="paymentMethod" value="gcash" disabled className="hidden" />
-                    <div className="w-6 h-6 rounded-full border-2 border-coffee-100"></div>
+                  <label className={`cursor-pointer border-2 p-6 rounded-2xl flex items-center space-x-4 transition-all ${formData.paymentMethod === 'gcash' ? 'border-[#007DFE] bg-[#007DFE]/5' : 'border-coffee-50'}`}>
+                    <input type="radio" name="paymentMethod" value="gcash" checked={formData.paymentMethod === 'gcash'} onChange={handleInputChange} className="hidden" />
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${formData.paymentMethod === 'gcash' ? 'border-[#007DFE]' : 'border-coffee-200'}`}>
+                        {formData.paymentMethod === 'gcash' && <div className="w-3 h-3 bg-[#007DFE] rounded-full"></div>}
+                    </div>
                     <div>
                       <span className="block font-black text-coffee-950 uppercase text-xs tracking-widest">GCash</span>
-                      <span className="block text-xs text-red-400">Unavailable</span>
+                      <span className="block text-xs text-[#007DFE]">Send to 09123456789</span>
                     </div>
                   </label>
                </div>
+
+               {formData.paymentMethod === 'gcash' && (
+                 <div className="mt-6 p-6 bg-[#007DFE]/5 border-2 border-[#007DFE]/20 rounded-2xl space-y-4">
+                   <div className="flex items-center space-x-3">
+                     <div className="w-10 h-10 bg-[#007DFE] rounded-xl flex items-center justify-center text-white font-black text-sm">G</div>
+                     <div>
+                       <p className="font-black text-coffee-950 text-sm">GCash Payment</p>
+                       <p className="text-xs text-coffee-400">Send payment to <span className="font-bold text-[#007DFE]">09123456789</span></p>
+                     </div>
+                   </div>
+                   <div className="space-y-2">
+                     <label className="text-[10px] font-black uppercase tracking-widest text-coffee-300 ml-1">GCash Reference Number</label>
+                     <input
+                       required
+                       type="text"
+                       name="gcashRef"
+                       placeholder="e.g. 1234 5678 9012"
+                       onChange={handleInputChange}
+                       className="w-full bg-white border border-[#007DFE]/20 rounded-2xl py-4 px-6 outline-none focus:ring-4 focus:ring-[#007DFE]/10 transition-all"
+                     />
+                   </div>
+                 </div>
+               )}
             </div>
           </form>
         </div>
