@@ -2,22 +2,28 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ShoppingCart, Star, Clock, ShieldCheck, Minus, Plus, Check, Coffee, CupSoda } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Star, Clock, ShieldCheck, Minus, Plus, Check, ChevronDown } from 'lucide-react';
 import { useCart } from '@/lib/CartContext';
 import Link from 'next/link';
 
 const sizes = [
-  { id: 'small', label: 'Small', extra: 0 },
-  { id: 'medium', label: 'Medium', extra: 20 },
-  { id: 'large', label: 'Large', extra: 40 },
+  { id: 'small', label: 'Small (12oz)', extra: 0 },
+  { id: 'medium', label: 'Medium (16oz)', extra: 20 },
+  { id: 'large', label: 'Large (22oz)', extra: 40 },
+];
+
+const drinkTypes = [
+  { id: 'hot', label: '☕ Hot' },
+  { id: 'iced', label: '🧊 Iced' },
+  { id: 'blended', label: '🥤 Blended' },
 ];
 
 const sugarLevels = [
-  { id: '0', label: '0%' },
-  { id: '25', label: '25%' },
-  { id: '50', label: '50%' },
-  { id: '75', label: '75%' },
-  { id: '100', label: '100%' },
+  { id: '100', label: '100% (Full Sweet)' },
+  { id: '75', label: '75% (Less Sweet)' },
+  { id: '50', label: '50% (Half Sweet)' },
+  { id: '25', label: '25% (Slightly Sweet)' },
+  { id: '0', label: '0% (No Sugar)' },
 ];
 
 const addOns = [
@@ -25,7 +31,8 @@ const addOns = [
   { id: 'whipped-cream', label: 'Whipped Cream', price: 20 },
   { id: 'caramel-drizzle', label: 'Caramel Drizzle', price: 15 },
   { id: 'vanilla-syrup', label: 'Vanilla Syrup', price: 15 },
-  { id: 'oat-milk', label: 'Oat Milk', price: 25 },
+  { id: 'oat-milk', label: 'Oat Milk Sub', price: 25 },
+  { id: 'chocolate-drizzle', label: 'Chocolate Drizzle', price: 15 },
 ];
 
 export default function ProductDetailPage() {
@@ -39,6 +46,7 @@ export default function ProductDetailPage() {
 
   // Customization states
   const [selectedSize, setSelectedSize] = useState('small');
+  const [drinkType, setDrinkType] = useState('iced');
   const [sugarLevel, setSugarLevel] = useState('100');
   const [selectedAddOns, setSelectedAddOns] = useState<string[]>([]);
 
@@ -74,8 +82,12 @@ export default function ProductDetailPage() {
   };
 
   const handleAddToCart = () => {
+    const sizeLabel = sizes.find(s => s.id === selectedSize)?.label || '';
+    const typeLabel = drinkTypes.find(d => d.id === drinkType)?.label || '';
+
     const customization = isBeverage ? {
       size: selectedSize,
+      drinkType,
       sugarLevel,
       addOns: selectedAddOns,
     } : undefined;
@@ -85,7 +97,9 @@ export default function ProductDetailPage() {
       price: unitPrice,
       quantity,
       customization,
-      customLabel: isBeverage ? `${sizes.find(s=>s.id===selectedSize)?.label} • Sugar ${sugarLevel}%${selectedAddOns.length > 0 ? ' • +' + selectedAddOns.length + ' add-on(s)' : ''}` : undefined,
+      customLabel: isBeverage
+        ? `${sizeLabel} • ${typeLabel} • Sugar ${sugarLevel}%${selectedAddOns.length > 0 ? ' • +' + selectedAddOns.length + ' add-on(s)' : ''}`
+        : undefined,
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
@@ -164,73 +178,83 @@ export default function ProductDetailPage() {
 
           {/* ☕ CUSTOMIZATION SECTION — Beverages Only */}
           {isBeverage && (
-            <div className="space-y-6 mb-8">
-              {/* Size Selection */}
-              <div>
-                <h3 className="text-xs font-black uppercase tracking-widest text-coffee-300 mb-3 flex items-center space-x-2">
-                  <CupSoda className="h-4 w-4" /><span>Choose Size</span>
-                </h3>
-                <div className="flex gap-3">
-                  {sizes.map(s => (
-                    <button
-                      key={s.id}
-                      onClick={() => setSelectedSize(s.id)}
-                      className={`flex-1 py-3 px-4 rounded-2xl font-bold text-sm transition-all border-2 ${
-                        selectedSize === s.id
-                          ? 'border-[#C69276] bg-[#C69276]/10 text-[#C69276]'
-                          : 'border-coffee-50 bg-white text-coffee-600 hover:border-coffee-200'
-                      }`}
-                    >
-                      {s.label}
-                      {s.extra > 0 && <span className="block text-[10px] text-coffee-400 mt-1">+₱{s.extra}</span>}
-                    </button>
-                  ))}
+            <div className="bg-cream-50/50 border border-coffee-100 rounded-[2rem] p-6 mb-8 space-y-5">
+              <h3 className="text-sm font-black uppercase tracking-widest text-coffee-950 flex items-center space-x-2">
+                <span>☕</span><span>Customize Your Drink</span>
+              </h3>
+
+              {/* Drink Type Dropdown */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-coffee-400 ml-1">Drink Type</label>
+                <div className="relative">
+                  <select
+                    value={drinkType}
+                    onChange={(e) => setDrinkType(e.target.value)}
+                    className="w-full appearance-none bg-white border-2 border-coffee-100 rounded-xl py-3.5 px-5 pr-12 outline-none focus:border-[#C69276] transition-all font-bold text-coffee-800 cursor-pointer"
+                  >
+                    {drinkTypes.map(d => (
+                      <option key={d.id} value={d.id}>{d.label}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-coffee-300 pointer-events-none" />
                 </div>
               </div>
 
-              {/* Sugar Level */}
-              <div>
-                <h3 className="text-xs font-black uppercase tracking-widest text-coffee-300 mb-3 flex items-center space-x-2">
-                  <Coffee className="h-4 w-4" /><span>Sugar Level</span>
-                </h3>
-                <div className="flex gap-2">
-                  {sugarLevels.map(sl => (
-                    <button
-                      key={sl.id}
-                      onClick={() => setSugarLevel(sl.id)}
-                      className={`flex-1 py-3 rounded-2xl font-bold text-sm transition-all border-2 ${
-                        sugarLevel === sl.id
-                          ? 'border-[#C69276] bg-[#C69276]/10 text-[#C69276]'
-                          : 'border-coffee-50 bg-white text-coffee-600 hover:border-coffee-200'
-                      }`}
-                    >
-                      {sl.label}
-                    </button>
-                  ))}
+              {/* Size Dropdown */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-coffee-400 ml-1">Cup Size</label>
+                <div className="relative">
+                  <select
+                    value={selectedSize}
+                    onChange={(e) => setSelectedSize(e.target.value)}
+                    className="w-full appearance-none bg-white border-2 border-coffee-100 rounded-xl py-3.5 px-5 pr-12 outline-none focus:border-[#C69276] transition-all font-bold text-coffee-800 cursor-pointer"
+                  >
+                    {sizes.map(s => (
+                      <option key={s.id} value={s.id}>{s.label}{s.extra > 0 ? ` (+₱${s.extra})` : ''}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-coffee-300 pointer-events-none" />
                 </div>
               </div>
 
-              {/* Add-ons */}
-              <div>
-                <h3 className="text-xs font-black uppercase tracking-widest text-coffee-300 mb-3">Add-ons</h3>
-                <div className="grid grid-cols-1 gap-2">
+              {/* Sugar Level Dropdown */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-coffee-400 ml-1">Sugar Level</label>
+                <div className="relative">
+                  <select
+                    value={sugarLevel}
+                    onChange={(e) => setSugarLevel(e.target.value)}
+                    className="w-full appearance-none bg-white border-2 border-coffee-100 rounded-xl py-3.5 px-5 pr-12 outline-none focus:border-[#C69276] transition-all font-bold text-coffee-800 cursor-pointer"
+                  >
+                    {sugarLevels.map(sl => (
+                      <option key={sl.id} value={sl.id}>{sl.label}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-coffee-300 pointer-events-none" />
+                </div>
+              </div>
+
+              {/* Add-ons Checkboxes */}
+              <div className="space-y-2">
+                <label className="text-[10px] font-black uppercase tracking-widest text-coffee-400 ml-1">Add-ons (Optional)</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {addOns.map(a => (
                     <button
                       key={a.id}
                       onClick={() => toggleAddOn(a.id)}
-                      className={`flex items-center justify-between px-5 py-3 rounded-2xl font-medium text-sm transition-all border-2 ${
+                      className={`flex items-center justify-between px-4 py-3 rounded-xl font-medium text-sm transition-all border-2 ${
                         selectedAddOns.includes(a.id)
                           ? 'border-[#C69276] bg-[#C69276]/10 text-[#C69276]'
                           : 'border-coffee-50 bg-white text-coffee-600 hover:border-coffee-200'
                       }`}
                     >
-                      <span className="flex items-center space-x-3">
-                        <span className={`w-5 h-5 rounded-md border-2 flex items-center justify-center text-white text-xs ${selectedAddOns.includes(a.id) ? 'bg-[#C69276] border-[#C69276]' : 'border-coffee-200'}`}>
+                      <span className="flex items-center space-x-2">
+                        <span className={`w-4 h-4 rounded flex items-center justify-center text-white text-xs ${selectedAddOns.includes(a.id) ? 'bg-[#C69276]' : 'border-2 border-coffee-200'}`}>
                           {selectedAddOns.includes(a.id) && <Check className="h-3 w-3" />}
                         </span>
-                        <span>{a.label}</span>
+                        <span className="text-xs">{a.label}</span>
                       </span>
-                      <span className="font-black text-coffee-400">+₱{a.price}</span>
+                      <span className="font-black text-coffee-400 text-xs">+₱{a.price}</span>
                     </button>
                   ))}
                 </div>
@@ -241,7 +265,7 @@ export default function ProductDetailPage() {
           {/* Price */}
           <div className="text-4xl font-black text-[#C69276] mb-8">
             ₱{unitPrice.toFixed(2)}
-            {sizeExtra + addOnsTotal > 0 && (
+            {(sizeExtra + addOnsTotal > 0) && (
               <span className="text-sm font-bold text-coffee-300 ml-3 line-through">₱{Number(product.price).toFixed(2)}</span>
             )}
           </div>
