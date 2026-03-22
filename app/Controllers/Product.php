@@ -15,10 +15,7 @@ class Product extends BaseController
         $categorySlug = $this->request->getGet('category');
         
         if ($categorySlug) {
-            $category = $categoryModel->where('slug', $categorySlug)->first();
-            if ($category) {
-                $productModel->where('category_id', $category['id']);
-            }
+            $productModel->where('category', $categorySlug);
         }
 
         $search = $this->request->getGet('search');
@@ -48,8 +45,8 @@ class Product extends BaseController
         $data = [
             'title' => 'Our Menu - NextCafe',
             'products' => $productModel->where('status', 'active')->findAll(),
-            'categories' => $categoryModel->findAll(),
-            'category_id' => $this->request->getGet('category'),
+            'categories' => $categoryModel->where('status', 'active')->findAll(),
+            'category_id' => $categorySlug,
             'search_query' => $search,
             'sort_param' => $sort
         ];
