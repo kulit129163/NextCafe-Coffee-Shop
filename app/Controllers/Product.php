@@ -12,7 +12,7 @@ class Product extends BaseController
         $productModel = new ProductModel();
         $categoryModel = new CategoryModel();
 
-        $categorySlug = $this->request->getGet('category');
+        $categorySlug = strtolower($this->request->getGet('category'));
         
         if ($categorySlug) {
             $productModel->where('category', $categorySlug);
