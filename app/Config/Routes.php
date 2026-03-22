@@ -12,6 +12,13 @@ $routes->group('', ['filter' => 'storefront'], static function ($routes) {
     $routes->get('contact', 'Home::contact');
     $routes->post('contact', 'Home::submitContact');
 
+    // Auth Routes
+    $routes->get('login', 'Auth::login');
+    $routes->post('login', 'Auth::attemptLogin');
+    $routes->get('register', 'Auth::register');
+    $routes->post('register', 'Auth::attemptRegister');
+    $routes->get('logout', 'Auth::logout');
+
     // Product/Menu Routes
     $routes->get('menu', 'Product::index');
     $routes->get('product/(:num)', 'Product::view/$1');
