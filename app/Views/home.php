@@ -16,7 +16,7 @@
             <div class="position-absolute top-0 start-0 w-100 h-100 opacity-25" style="background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');"></div>
             <div class="card-body p-5 d-flex align-items-center position-relative">
                 <div class="col-lg-7 text-white">
-                    <span class="badge bg-primary text-white rounded-pill px-3 py-2 mb-4 fw-bold shadow-sm">EST. 2024</span>
+
                     <h1 class="display-2 fw-800 mb-3 line-height-1">Premium <span class="text-primary">Coffee</span> Experience</h1>
                     <p class="lead mb-5 opacity-75 fw-400 pe-lg-5" style="font-size: 1.25rem;">Discover the perfect blend of tradition and innovation. Our beans are ethically sourced and roasted to perfection for the ultimate coffee enthusiast.</p>
                     <div class="d-flex gap-3">
