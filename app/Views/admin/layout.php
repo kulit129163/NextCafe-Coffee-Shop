@@ -13,12 +13,13 @@
 
     <style>
         :root {
-            --sidebar-bg: #2C1810;
-            --sidebar-hover: rgba(255,255,255,0.08);
-            --sidebar-active-bg: rgba(255,255,255,0.12);
+            --sidebar-bg: #110905;
+            --sidebar-hover: rgba(255,255,255,0.05);
+            --sidebar-active-bg: rgba(255,255,255,0.1);
+            --sidebar-text: #FFFFFF;
+            --sidebar-text-muted: rgba(255,255,255,0.6);
             --accent: #C69276;
             --accent-light: #f5ede8;
-            --text-muted-sidebar: rgba(255,255,255,0.5);
             --app-bg: #F8F5F2;
             --card-bg: #FFFFFF;
             --border-color: #EEE8E3;
@@ -49,33 +50,28 @@
         }
 
         .sidebar-logo {
-            padding: 2rem 1.5rem 1.5rem;
+            padding: 2.5rem 1.8rem 2rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
             text-decoration: none;
-            border-bottom: 1px solid rgba(255,255,255,0.07);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
         .sidebar-logo .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--accent);
-            border-radius: 10px;
+            font-size: 2.2rem;
+            color: #C69276; /* Match the cup color in screenshot */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
-            color: white;
-            flex-shrink: 0;
         }
 
         .sidebar-logo span {
-            font-size: 1.15rem;
-            font-weight: 700;
+            font-size: 1.8rem;
+            font-weight: 800;
             color: #fff;
-            letter-spacing: -0.3px;
+            letter-spacing: -0.5px;
+            font-family: 'Inter', sans-serif;
         }
 
         .sidebar-nav {
@@ -86,30 +82,26 @@
         .sidebar-nav a {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            padding: 0.7rem 1.5rem;
-            color: var(--text-muted-sidebar);
+            gap: 1.2rem;
+            padding: 0.9rem 2rem;
+            color: var(--sidebar-text-muted);
             text-decoration: none;
-            font-size: 0.875rem;
+            font-size: 1rem;
             font-weight: 500;
             transition: all 0.2s ease;
-            border-left: 3px solid transparent;
         }
 
         .sidebar-nav a i {
-            font-size: 1rem;
+            font-size: 1.4rem;
             flex-shrink: 0;
         }
 
         .sidebar-nav a:hover {
-            background: var(--sidebar-hover);
-            color: rgba(255,255,255,0.85);
+            color: var(--sidebar-text);
         }
 
         .sidebar-nav a.active {
-            background: var(--sidebar-active-bg);
-            color: #fff;
-            border-left-color: var(--accent);
+            color: var(--sidebar-text);
         }
 
         .sidebar-divider {
@@ -365,16 +357,16 @@
     <!-- Admin Sidebar -->
     <aside class="admin-sidebar">
         <a href="<?= base_url('admin') ?>" class="sidebar-logo">
-            <div class="logo-icon"><i class="bi bi-cup-hot-fill"></i></div>
+            <div class="logo-icon"><i class="bi bi-cup-hot"></i></div>
             <span>NextCafe</span>
         </a>
 
         <nav class="sidebar-nav">
-            <a href="<?= base_url('admin') ?>" class="<?= current_url() === base_url('admin') || current_url() === base_url('admin/') ? 'active' : '' ?>">
+            <a href="<?= base_url('admin') ?>" class="<?= current_url() === base_url('admin') || current_url() === base_url('admin/') || strpos(current_url(), 'admin/dashboard') !== false ? 'active' : '' ?>">
                 <i class="bi bi-speedometer2"></i> Dashboard
             </a>
             <a href="<?= base_url('admin/products') ?>" class="<?= strpos(current_url(), 'admin/products') !== false ? 'active' : '' ?>">
-                <i class="bi bi-box-seam"></i> Products
+                <i class="bi bi-grid"></i> Products
             </a>
             <a href="<?= base_url('admin/orders') ?>" class="<?= strpos(current_url(), 'admin/orders') !== false ? 'active' : '' ?>">
                 <i class="bi bi-receipt"></i> Orders
@@ -389,11 +381,11 @@
 
         <div class="sidebar-footer">
             <div class="sidebar-divider"></div>
-            <a href="<?= base_url() ?>" style="margin-bottom: 0.5rem;">
-                <i class="bi bi-shop"></i> View Shop
+            <a href="<?= base_url() ?>" style="margin-bottom: 0.5rem; padding-left: 0.5rem;">
+                <i class="bi bi-shop" style="font-size: 1.2rem; margin-right: 1.2rem;"></i> View Shop
             </a>
-            <a href="<?= base_url('admin/logout') ?>" onclick="return confirm('End admin session?')">
-                <i class="bi bi-box-arrow-right"></i> Logout
+            <a href="<?= base_url('admin/logout') ?>" onclick="return confirm('End admin session?')" style="padding-left: 0.5rem;">
+                <i class="bi bi-box-arrow-right" style="font-size: 1.2rem; margin-right: 1.2rem;"></i> Logout
             </a>
         </div>
     </aside>
