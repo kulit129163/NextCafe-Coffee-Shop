@@ -350,6 +350,14 @@
             font-size: 0.875rem;
             margin-bottom: 1.25rem;
         }
+        .flash-info {
+            background: #EBF8FF; color: #2B6CB0;
+            border: 1px solid #BEE3F8;
+            border-radius: 10px;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+            margin-bottom: 1.25rem;
+        }
     </style>
 </head>
 <body>
@@ -381,9 +389,7 @@
 
         <div class="sidebar-footer">
             <div class="sidebar-divider"></div>
-            <a href="<?= base_url() ?>" style="margin-bottom: 0.5rem; padding-left: 0.5rem;">
-                <i class="bi bi-shop" style="font-size: 1.2rem; margin-right: 1.2rem;"></i> View Shop
-            </a>
+
             <a href="<?= base_url('admin/logout') ?>" onclick="return confirm('End admin session?')" style="padding-left: 0.5rem;">
                 <i class="bi bi-box-arrow-right" style="font-size: 1.2rem; margin-right: 1.2rem;"></i> Logout
             </a>
@@ -406,6 +412,9 @@
         <?php endif; ?>
         <?php if (session()->getFlashdata('error')): ?>
             <div class="flash-error"><i class="bi bi-exclamation-circle me-2"></i><?= session()->getFlashdata('error') ?></div>
+        <?php endif; ?>
+        <?php if (session()->getFlashdata('info')): ?>
+            <div class="flash-info"><i class="bi bi-info-circle me-2"></i><?= session()->getFlashdata('info') ?></div>
         <?php endif; ?>
 
         <?= $this->renderSection('content') ?>

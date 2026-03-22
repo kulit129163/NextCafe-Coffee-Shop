@@ -5,40 +5,35 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
-$routes->get('about', 'Home::about');
-$routes->get('contact', 'Home::contact');
+// Storefront Routes (Filtered to prevent Admin access)
+$routes->group('', ['filter' => 'storefront'], static function ($routes) {
+    $routes->get('/', 'Home::index');
+    $routes->get('about', 'Home::about');
+    $routes->get('contact', 'Home::contact');
+    $routes->post('contact', 'Home::submitContact');
 
-// Product/Menu Routes
-$routes->get('menu', 'Product::index');
-$routes->get('product/(:num)', 'Product::view/$1');
-$routes->get('menu/product/(:num)', 'Product::view/$1');
+    // Product/Menu Routes
+    $routes->get('menu', 'Product::index');
+    $routes->get('product/(:num)', 'Product::view/$1');
+    $routes->get('menu/product/(:num)', 'Product::view/$1');
 
-// Auth Routes
-$routes->get('login', 'Auth::login');
-$routes->post('login', 'Auth::attemptLogin');
-$routes->get('register', 'Auth::register');
-$routes->post('register', 'Auth::attemptRegister');
-$routes->get('logout', 'Auth::logout');
+    // Cart Routes
+    $routes->get('cart', 'Cart::index');
+    $routes->post('cart/add', 'Cart::add');
+    $routes->get('cart/remove/(:num)', 'Cart::remove/$1');
+    $routes->get('cart/increase/(:num)', 'Cart::increase/$1');
+    $routes->get('cart/decrease/(:num)', 'Cart::decrease/$1');
 
-// Cart Routes
-$routes->get('cart', 'Cart::index');
-$routes->post('cart/add', 'Cart::add');
-$routes->get('cart/remove/(:num)', 'Cart::remove/$1');
-$routes->get('cart/increase/(:num)', 'Cart::increase/$1');
-$routes->get('cart/decrease/(:num)', 'Cart::decrease/$1');
+    // Checkout Routes
+    $routes->get('checkout', 'Checkout::index');
+    $routes->post('checkout/process', 'Checkout::process');
 
-// Checkout Routes
-$routes->get('checkout', 'Checkout::index');
-$routes->post('checkout/process', 'Checkout::process');
-
-$routes->post('contact', 'Home::submitContact');
-
-// Profile/Orders
-$routes->get('profile', 'User::profile');
-$routes->post('profile/update', 'User::updateProfile');
-$routes->post('profile/password', 'User::updatePassword');
-$routes->get('orders', 'User::orders');
+    // Profile/Orders
+    $routes->get('profile', 'User::profile');
+    $routes->post('profile/update', 'User::updateProfile');
+    $routes->post('profile/password', 'User::updatePassword');
+    $routes->get('orders', 'User::orders');
+});
 
 // Admin Auth (Unfiltered)
 $routes->get('admin/login', 'Admin\Auth::login');

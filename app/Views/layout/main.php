@@ -211,23 +211,10 @@
                 <i class="bi bi-cart3"></i> My Cart
             </a>
             
-            <?php if (session()->get('role') === 'admin'): ?>
-                <div class="my-4" style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
-                <div class="px-3 mb-2 text-uppercase fw-bold text-white-50" style="font-size: 0.75rem;"><i class="bi bi-shield-lock-fill me-1"></i> Admin Panel</div>
-                <a class="nav-link <?= strpos(current_url(), 'admin/products') !== false ? 'active' : '' ?>" href="<?= base_url('admin/products') ?>">
-                    <i class="bi bi-box-seam-fill"></i> Products
-                </a>
-                <a class="nav-link <?= strpos(current_url(), 'admin/categories') !== false ? 'active' : '' ?>" href="<?= base_url('admin/categories') ?>">
-                    <i class="bi bi-tags-fill"></i> Categories
-                </a>
-                <a class="nav-link <?= strpos(current_url(), 'admin/users') !== false ? 'active' : '' ?>" href="<?= base_url('admin/users') ?>">
-                    <i class="bi bi-people-fill"></i> Users
-                </a>
-            <?php endif; ?>
+
 
             <div class="my-4" style="border-top: 1px solid rgba(255,255,255,0.1);"></div>
-            <?php $logoutUrl = session()->get('role') === 'admin' ? base_url('admin/logout') : base_url('logout'); ?>
-            <a class="nav-link text-danger" href="<?= $logoutUrl ?>" onclick="return confirm('Are you sure you want to logout?')">
+            <a class="nav-link text-danger" href="<?= base_url('logout') ?>" onclick="return confirm('Are you sure you want to logout?')">
                 <i class="bi bi-box-arrow-right"></i> Logout
             </a>
         </nav>
