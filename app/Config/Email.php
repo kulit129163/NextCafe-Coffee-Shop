@@ -38,12 +38,12 @@ class Email extends BaseConfig
     /**
      * SMTP Username
      */
-    public string $SMTPUser = 'YOUR_MAILTRAP_USER'; // NOTE: Update this via .env or directly here
+    public string $SMTPUser = '2d1d5a130d76bc';
 
     /**
      * SMTP Password
      */
-    public string $SMTPPass = 'YOUR_MAILTRAP_PASS'; // NOTE: Update this via .env or directly here
+    public string $SMTPPass = 'e7118e14b2dc69';
 
     /**
      * SMTP Port

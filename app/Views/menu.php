@@ -2,6 +2,14 @@
 
 <?= $this->section('content') ?>
 
+<?php
+    $wishlistIds = [];
+    if (session()->get('isLoggedIn')) {
+        $wishlistModel = new \App\Models\WishlistModel();
+        $wishlistIds = array_column($wishlistModel->where('user_id', session()->get('id'))->findAll(), 'product_id');
+    }
+?>
+
 <div class="d-flex justify-content-between align-items-center mb-5 flex-wrap gap-3">
     <!-- Category Chips (Horizontal Scroll on Mobile) -->
     <div class="d-flex flex-nowrap overflow-auto pb-2 gap-2 no-scrollbar flex-grow-1">
@@ -45,6 +53,14 @@
                             $image = !empty($product['image']) ? base_url($product['image']) : 'https://via.placeholder.com/300x300?text=Coffee';
                         ?>
                         <img src="<?= $image ?>" class="w-100 h-100 object-fit-cover transition-transform" alt="<?= esc($product['name']) ?>">
+                        <div class="position-absolute top-0 end-0 p-2">
+                            <a href="<?= base_url('wishlist/toggle/' . $product['id']) ?>" 
+                               class="btn btn-white rounded-circle shadow-sm border-0 d-flex align-items-center justify-content-center p-0" 
+                               style="width: 32px; height: 32px;"
+                               title="<?= in_array($product['id'], $wishlistIds) ? 'Remove from wishlist' : 'Add to wishlist' ?>">
+                                <i class="bi <?= in_array($product['id'], $wishlistIds) ? 'bi-heart-fill text-danger' : 'bi-heart' ?>" style="font-size: 0.9rem;"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="card-body p-0 d-flex flex-column">
                         <h5 class="fw-bold fs-6 mb-1 text-truncate"><?= esc($product['name']) ?></h5>
@@ -94,6 +110,15 @@
     }
     .transition-transform:hover {
         transform: scale(1.05);
+    }
+    .btn-white {
+        background: white;
+        color: #333;
+        transition: all 0.2s;
+    }
+    .btn-white:hover {
+        transform: scale(1.1);
+        background: #f8f9fa;
     }
 </style>
 

@@ -44,6 +44,10 @@ class Order extends BaseController
                                 ->where('order_id', $id)
                                 ->findAll();
 
+        foreach ($items as &$item) {
+            $item['decoded_options'] = $item['options'] ? json_decode($item['options'], true) : null;
+        }
+
         $data = [
             'title' => 'Order Details #' . $order['id'],
             'order' => $order,

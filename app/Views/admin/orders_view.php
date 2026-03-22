@@ -33,7 +33,21 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <img src="<?= base_url($item['product_image']) ?>" class="rounded-3 me-3" style="object-fit: cover; width: 50px; height: 50px;">
-                                    <span class="fw-bold"><?= htmlspecialchars($item['product_name']) ?></span>
+                                    <div>
+                                        <span class="fw-bold d-block"><?= htmlspecialchars($item['product_name']) ?></span>
+                                        <?php if (!empty($item['decoded_options'])): ?>
+                                            <div class="smaller text-muted mt-1">
+                                                <span class="badge bg-light text-dark border fw-normal"><?= $item['decoded_options']['drink_type'] ?? 'Iced' ?></span>
+                                                <span class="badge bg-light text-dark border fw-normal"><?= $item['decoded_options']['size'] ?? 'Small' ?></span>
+                                                <span class="badge bg-light text-dark border fw-normal">Sugar: <?= $item['decoded_options']['sugar_level'] ?? '100%' ?></span>
+                                                <?php if (!empty($item['decoded_options']['addons'])): ?>
+                                                    <div class="mt-1">
+                                                        <strong>Add-ons:</strong> <?= implode(', ', $item['decoded_options']['addons']) ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </td>
                             <td class="text-center text-muted">₱<?= number_format($item['price'], 2) ?></td>

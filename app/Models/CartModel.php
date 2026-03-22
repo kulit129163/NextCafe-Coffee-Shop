@@ -11,7 +11,7 @@ class CartModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $protectFields    = true;
-    protected $allowedFields    = ['user_id', 'product_id', 'quantity'];
+    protected $allowedFields    = ['user_id', 'product_id', 'quantity', 'options', 'unit_price'];
 
     // Dates
     protected $useTimestamps = true;

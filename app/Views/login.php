@@ -1,56 +1,56 @@
-<?= $this->extend('layout/auth') ?>
+<?= $this->extend('layout/split_auth') ?>
 
 <?= $this->section('content') ?>
 
-<div class="card border-0 shadow-lg rounded-5 p-4 p-md-5 bg-white">
-    <div class="text-center mb-5">
-        <div class="bg-light rounded-circle p-3 d-inline-block mb-3">
-            <i class="bi bi-person-lock fs-1 text-primary"></i>
+<h1 class="form-title">Welcome back</h1>
+<p class="form-subtitle">Sign in to your NextCafe account to continue.</p>
+
+<?php if (session()->getFlashdata('error')): ?>
+    <div class="auth-alert danger">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <span><?= session()->getFlashdata('error') ?></span>
+    </div>
+<?php endif; ?>
+
+<?php if (session()->getFlashdata('success')): ?>
+    <div class="auth-alert success">
+        <i class="bi bi-check-circle-fill"></i>
+        <span><?= session()->getFlashdata('success') ?></span>
+    </div>
+<?php endif; ?>
+
+<div class="form-divider"><span>Login to your account</span></div>
+
+<form action="<?= base_url('login') ?>" method="POST">
+
+    <div class="field-group">
+        <label class="field-label" for="login-id">Username or Email</label>
+        <div class="field-wrap">
+            <i class="bi bi-person fi"></i>
+            <input type="text" id="login-id" name="login" placeholder="Enter your username or email" required>
         </div>
-        <h2 class="fw-800">Welcome Back</h2>
-        <p class="text-muted">Login to your NextCafe account</p>
     </div>
 
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger border-0 rounded-4 small py-2">
-            <i class="bi bi-exclamation-triangle me-2"></i><?= session()->getFlashdata('error') ?>
+    <div class="field-group">
+        <label class="field-label" for="login-pw">Password</label>
+        <div class="field-wrap">
+            <i class="bi bi-lock fi"></i>
+            <input type="password" id="login-pw" name="password" placeholder="Enter your password" required>
+            <button type="button" class="toggle-pw" aria-label="Show/hide password">
+                <i class="bi bi-eye"></i>
+            </button>
         </div>
-    <?php endif; ?>
+    </div>
 
-    <?php if (session()->getFlashdata('success')): ?>
-        <div class="alert alert-success border-0 rounded-4 small py-2">
-            <i class="bi bi-check-circle me-2"></i><?= session()->getFlashdata('success') ?>
-        </div>
-    <?php endif; ?>
+    <div class="form-opts">
+        <label><input type="checkbox" name="remember"> Remember me</label>
+        <a href="#">Forgot password?</a>
+    </div>
 
-    <form action="<?= base_url('login') ?>" method="POST">
-        <div class="mb-4">
-            <label class="form-label small fw-bold text-muted">USERNAME OR EMAIL</label>
-            <div class="input-group bg-light rounded-pill px-3">
-                <span class="input-group-text bg-transparent border-0"><i class="bi bi-person text-muted"></i></span>
-                <input type="text" name="login" class="form-control bg-transparent border-0 py-2" placeholder="Enter your username or email" required>
-            </div>
-        </div>
-        
-        <div class="mb-5">
-            <div class="d-flex justify-content-between">
-                <label class="form-label small fw-bold text-muted">PASSWORD</label>
-                <a href="#" class="small text-primary text-decoration-none fw-bold">Forgot?</a>
-            </div>
-            <div class="input-group bg-light rounded-pill px-3">
-                <span class="input-group-text bg-transparent border-0"><i class="bi bi-key text-muted"></i></span>
-                <input type="password" name="password" class="form-control bg-transparent border-0 py-2" placeholder="Enter your password" required>
-            </div>
-        </div>
+    <button type="submit" class="btn-auth">Login</button>
 
-        <div class="d-grid mb-4">
-            <button type="submit" class="btn btn-primary rounded-pill py-3 fw-bold shadow-sm">Sign In</button>
-        </div>
+</form>
 
-        <div class="text-center">
-            <p class="small text-muted mb-0">Don't have an account? <a href="<?= base_url('register') ?>" class="text-primary fw-bold text-decoration-none">Create Account</a></p>
-        </div>
-    </form>
-</div>
+<p class="auth-alt">Don't have an account? <a href="<?= base_url('register') ?>">Register Now</a></p>
 
 <?= $this->endSection() ?>

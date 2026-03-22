@@ -13,15 +13,30 @@
                             <div class="row align-items-center">
                                 <div class="col-md-2">
                                     <?php 
-                                        $image = !empty($item['image']) ? base_url($item['image']) : 'https://via.placeholder.com/100x100?text=Coffee';
+                                        $image = !empty($item['product_image']) ? base_url($item['product_image']) : 'https://via.placeholder.com/100x100?text=Coffee';
                                     ?>
                                     <div class="rounded-4 overflow-hidden" style="height: 80px;">
-                                        <img src="<?= $image ?>" class="w-100 h-100 object-fit-cover" alt="<?= esc($item['name']) ?>">
+                                        <img src="<?= $image ?>" class="w-100 h-100 object-fit-cover" alt="<?= esc($item['product_name']) ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <h6 class="fw-bold mb-0 text-truncate"><?= esc($item['name']) ?></h6>
-                                    <p class="text-muted x-small mb-0">Premium Espresso Blend</p>
+                                    <h6 class="fw-bold mb-1 text-truncate"><?= esc($item['product_name']) ?></h6>
+                                    <div class="text-muted smaller">
+                                        <?php if (!empty($item['decoded_options'])): ?>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                <span class="badge bg-light text-dark fw-normal border"><?= $item['decoded_options']['drink_type'] ?? 'Iced' ?></span>
+                                                <span class="badge bg-light text-dark fw-normal border"><?= $item['decoded_options']['size'] ?? 'Small' ?></span>
+                                                <span class="badge bg-light text-dark fw-normal border">Sugar: <?= $item['decoded_options']['sugar_level'] ?? '100%' ?></span>
+                                            </div>
+                                            <?php if (!empty($item['decoded_options']['addons'])): ?>
+                                                <div class="mt-1 x-small">
+                                                    <span class="fw-bold">Add-ons:</span> <?= implode(', ', $item['decoded_options']['addons']) ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        <?php else: ?>
+                                            <p class="mb-0 x-small">Standard Preparation</p>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                                 <div class="col-md-2 text-center text-md-start">
                                     <div class="d-flex align-items-center justify-content-center justify-content-md-start">
@@ -31,7 +46,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 text-end">
-                                    <span class="fw-800 text-primary">₱<?= number_format($item['price'] * $item['quantity'], 2) ?></span>
+                                    <div class="d-block">
+                                        <span class="fw-800 text-primary d-block">₱<?= number_format($item['item_total'], 2) ?></span>
+                                        <small class="text-muted smaller">₱<?= number_format($item['unit_price'], 2) ?> ea</small>
+                                    </div>
                                 </div>
                                 <div class="col-md-2 text-end">
                                     <a href="<?= base_url('cart/remove/' . $item['id']) ?>" class="btn btn-light rounded-circle text-danger p-2 hover-shadow">

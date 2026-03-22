@@ -44,12 +44,44 @@
                     <?php endif; ?>
                 </td>
                 <td>
-                    <div class="d-flex gap-1">
-                        <a href="<?= base_url('admin/products/toggleStatus/' . $product['id']) ?>" class="action-btn <?= $product['status'] === 'active' ? 'delete' : 'approve' ?>" title="<?= $product['status'] === 'active' ? 'Mark Sold Out' : 'Make Available' ?>">
-                            <i class="bi <?= $product['status'] === 'active' ? 'bi-x-circle' : 'bi-check-circle' ?>"></i>
+                    <div class="d-flex gap-2 align-items-center flex-wrap">
+                        <!-- Toggle Status -->
+                        <?php if ($product['status'] === 'active'): ?>
+                            <a href="<?= base_url('admin/products/toggleStatus/' . $product['id']) ?>"
+                               title="Mark as Sold Out"
+                               style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;text-decoration:none;border:1.5px solid #16a34a;color:#16a34a;background:rgba(22,163,74,.08);transition:all .2s;"
+                               onmouseover="this.style.background='#16a34a';this.style.color='#fff';"
+                               onmouseout="this.style.background='rgba(22,163,74,.08)';this.style.color='#16a34a';">
+                                <i class="bi bi-check-circle-fill"></i> Available
+                            </a>
+                        <?php else: ?>
+                            <a href="<?= base_url('admin/products/toggleStatus/' . $product['id']) ?>"
+                               title="Make Available"
+                               style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;text-decoration:none;border:1.5px solid #dc2626;color:#dc2626;background:rgba(220,38,38,.08);transition:all .2s;"
+                               onmouseover="this.style.background='#dc2626';this.style.color='#fff';"
+                               onmouseout="this.style.background='rgba(220,38,38,.08)';this.style.color='#dc2626';">
+                                <i class="bi bi-x-circle-fill"></i> Sold Out
+                            </a>
+                        <?php endif; ?>
+
+                        <!-- Edit -->
+                        <a href="<?= base_url('admin/products/edit/' . $product['id']) ?>"
+                           title="Edit Product"
+                           style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;text-decoration:none;border:1.5px solid #2563eb;color:#2563eb;background:rgba(37,99,235,.08);transition:all .2s;"
+                           onmouseover="this.style.background='#2563eb';this.style.color='#fff';"
+                           onmouseout="this.style.background='rgba(37,99,235,.08)';this.style.color='#2563eb';">
+                            <i class="bi bi-pencil-fill"></i> Edit
                         </a>
-                        <a href="<?= base_url('admin/products/edit/' . $product['id']) ?>" class="action-btn edit" title="Edit"><i class="bi bi-pencil"></i></a>
-                        <a href="<?= base_url('admin/products/delete/' . $product['id']) ?>" class="action-btn delete" title="Delete" onclick="return confirm('Delete <?= esc($product['name']) ?>?')"><i class="bi bi-trash"></i></a>
+
+                        <!-- Delete -->
+                        <a href="<?= base_url('admin/products/delete/' . $product['id']) ?>"
+                           title="Delete Product"
+                           onclick="return confirm('Are you sure you want to delete <?= esc($product['name']) ?>?')"
+                           style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;text-decoration:none;border:1.5px solid #dc2626;color:#fff;background:#dc2626;transition:all .2s;box-shadow:0 2px 8px rgba(220,38,38,.3);"
+                           onmouseover="this.style.background='#b91c1c';this.style.boxShadow='0 4px 14px rgba(185,28,28,.4)';"
+                           onmouseout="this.style.background='#dc2626';this.style.boxShadow='0 2px 8px rgba(220,38,38,.3)';">
+                            <i class="bi bi-trash-fill"></i> Delete
+                        </a>
                     </div>
                 </td>
             </tr>

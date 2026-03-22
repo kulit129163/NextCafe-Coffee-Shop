@@ -118,7 +118,7 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            color: var(--text-muted-sidebar);
+            color: var(--sidebar-text-muted);
             text-decoration: none;
             font-size: 0.875rem;
             font-weight: 500;
@@ -126,7 +126,11 @@
             transition: color 0.2s;
         }
 
-        .sidebar-footer a:hover { color: rgba(255,255,255,0.85); }
+        .sidebar-footer a:hover { 
+            color: var(--sidebar-text);
+            background: var(--sidebar-hover);
+            border-radius: 8px;
+        }
 
         /* Main Content */
         .admin-main {
@@ -390,8 +394,9 @@
         <div class="sidebar-footer">
             <div class="sidebar-divider"></div>
 
-            <a href="<?= base_url('admin/logout') ?>" onclick="return confirm('End admin session?')" style="padding-left: 0.5rem;">
-                <i class="bi bi-box-arrow-right" style="font-size: 1.2rem; margin-right: 1.2rem;"></i> Logout
+            <a href="javascript:void(0)" class="px-3" data-bs-toggle="modal" data-bs-target="#adminLogoutModal">
+                <i class="bi bi-box-arrow-right" style="font-size: 1.2rem;"></i> 
+                <span>Logout</span>
             </a>
         </div>
     </aside>
@@ -419,6 +424,29 @@
 
         <?= $this->renderSection('content') ?>
     </main>
+
+    <!-- Admin Logout Modal -->
+    <div class="modal fade" id="adminLogoutModal" tabindex="-1" aria-labelledby="adminLogoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 20px; overflow: hidden;">
+                <div class="modal-header border-0 bg-dark text-white p-4">
+                    <h5 class="modal-title fw-700" id="adminLogoutModalLabel">Admin Session</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-5 text-center text-dark">
+                    <div class="mb-4">
+                        <i class="bi bi-shield-lock display-3 opacity-25" style="color: var(--accent);"></i>
+                    </div>
+                    <h4 class="fw-700 mb-2">End Session?</h4>
+                    <p class="text-muted fw-500 mb-0">Are you sure you want to exit the admin dashboard?</p>
+                </div>
+                <div class="modal-footer border-0 p-4 pt-0 justify-content-center">
+                    <button type="button" class="btn btn-light rounded-3 px-4 py-2 fw-600 me-2" data-bs-dismiss="modal">Go back</button>
+                    <a href="<?= base_url('admin/logout') ?>" class="btn btn-dark rounded-3 px-4 py-2 fw-700 shadow-sm" style="background: var(--sidebar-bg); border-color: var(--sidebar-bg);">Yes, logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

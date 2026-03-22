@@ -47,12 +47,23 @@
             
             <ul class="list-unstyled mb-4">
                 <?php foreach ($items as $item): ?>
-                <li class="d-flex justify-content-between align-items-center mb-3 pb-3 border-bottom border-light">
-                    <div>
-                        <h6 class="my-0 fw-bold"><?= esc($item['name']) ?></h6>
-                        <small class="text-muted">Qty: <?= $item['quantity'] ?></small>
+                <li class="mb-3 pb-3 border-bottom border-light">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="my-0 fw-bold"><?= esc($item['product_name']) ?></h6>
+                            <div class="text-muted smaller mt-1">
+                                <?php if (!empty($item['decoded_options'])): ?>
+                                    <span class="d-block"><?= $item['decoded_options']['drink_type'] ?? 'Iced' ?> | <?= $item['decoded_options']['size'] ?? 'Small' ?></span>
+                                    <span class="d-block">Sugar: <?= $item['decoded_options']['sugar_level'] ?? '100%' ?></span>
+                                    <?php if (!empty($item['decoded_options']['addons'])): ?>
+                                        <span class="d-block">Add-ons: <?= implode(', ', $item['decoded_options']['addons']) ?></span>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <span class="d-block mt-1">Qty: <?= $item['quantity'] ?></span>
+                            </div>
+                        </div>
+                        <span class="fw-bold">₱<?= number_format($item['item_total'], 2) ?></span>
                     </div>
-                    <span class="fw-bold">₱<?= number_format($item['price'] * $item['quantity'], 2) ?></span>
                 </li>
                 <?php endforeach; ?>
             </ul>

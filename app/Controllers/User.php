@@ -17,9 +17,30 @@ class User extends BaseController
         $userModel = new UserModel();
         $user = $userModel->find(session()->get('id'));
 
+        $orderModel = new OrderModel();
+        $orderItemModel = new OrderItemModel();
+
+        // Get orders for the logged-in user
+        $orders = $orderModel->where('user_id', session()->get('id'))
+                            ->orderBy('created_at', 'DESC')
+                            ->findAll();
+
+        // For each order, get its items with product details
+        foreach ($orders as &$order) {
+            $order['items'] = $orderItemModel->select('order_items.*, products.name as product_name, products.image as product_image')
+                                            ->join('products', 'products.id = order_items.product_id')
+                                            ->where('order_id', $order['id'])
+                                            ->findAll();
+            
+            foreach ($order['items'] as &$item) {
+                $item['decoded_options'] = $item['options'] ? json_decode($item['options'], true) : null;
+            }
+        }
+
         $data = [
             'title' => 'My Profile - NextCafe',
             'user'  => $user,
+            'orders' => $orders, // Add orders data to the profile view
         ];
 
         return view('profile', $data);
@@ -45,6 +66,10 @@ class User extends BaseController
                                             ->join('products', 'products.id = order_items.product_id')
                                             ->where('order_id', $order['id'])
                                             ->findAll();
+            
+            foreach ($order['items'] as &$item) {
+                $item['decoded_options'] = $item['options'] ? json_decode($item['options'], true) : null;
+            }
         }
 
         $data = [

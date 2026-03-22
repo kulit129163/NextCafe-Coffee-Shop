@@ -40,6 +40,11 @@ $routes->group('', ['filter' => 'storefront'], static function ($routes) {
     $routes->post('profile/update', 'User::updateProfile');
     $routes->post('profile/password', 'User::updatePassword');
     $routes->get('orders', 'User::orders');
+
+    // Wishlist Routes
+    $routes->get('wishlist', 'Wishlist::index');
+    $routes->get('wishlist/toggle/(:num)', 'Wishlist::toggle/$1');
+    $routes->get('wishlist/remove/(:num)', 'Wishlist::remove/$1');
 });
 
 // Admin Auth (Unfiltered)
@@ -77,4 +82,6 @@ $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
     // Users
     $routes->get('users', 'Admin\User::index');
     $routes->post('users/updateRole/(:num)', 'Admin\User::updateRole/$1');
+    $routes->get('users/toggleStatus/(:num)', 'Admin\User::toggleStatus/$1');
+    $routes->get('users/delete/(:num)', 'Admin\User::delete/$1');
 });

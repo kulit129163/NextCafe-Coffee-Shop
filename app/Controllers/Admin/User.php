@@ -38,4 +38,41 @@ class User extends BaseController
 
         return redirect()->to('admin/users')->with('success', "User role updated successfully to " . esc($this->request->getPost('role')) . ".");
     }
+
+    public function toggleStatus($id)
+    {
+        $userModel = new UserModel();
+        $user = $userModel->find($id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        if ($id == session()->get('id')) {
+            return redirect()->back()->with('error', 'You cannot deactivate your own account.');
+        }
+
+        $newStatus = ($user['status'] ?? 'active') === 'active' ? 'inactive' : 'active';
+        $userModel->update($id, ['status' => $newStatus]);
+
+        $msg = $newStatus === 'active' ? 'activated' : 'deactivated';
+        return redirect()->to('admin/users')->with('success', "User account has been {$msg}.");
+    }
+
+    public function delete($id)
+    {
+        $userModel = new UserModel();
+        $user = $userModel->find($id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        if ($id == session()->get('id')) {
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+
+        $userModel->delete($id);
+        return redirect()->to('admin/users')->with('success', 'User deleted successfully.');
+    }
 }

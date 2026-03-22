@@ -15,18 +15,16 @@ class Checkout extends BaseController
         }
 
         $cartModel = new CartModel();
-        $items = $cartModel->select('cart.*, products.name, products.price, products.image')
-                          ->join('products', 'products.id = cart.product_id')
-                          ->where('user_id', session()->get('id'))
-                          ->findAll();
-
-        if (empty($items)) {
-            return redirect()->to('cart')->with('error', 'Your cart is empty.');
-        }
+        $items = $cartModel->select('cart.*, products.name as product_name, products.image as product_image')
+                           ->join('products', 'products.id = cart.product_id')
+                           ->where('user_id', session()->get('id'))
+                           ->findAll();
 
         $totalPrice = 0;
-        foreach ($items as $item) {
-            $totalPrice += $item['price'] * $item['quantity'];
+        foreach ($items as &$item) {
+            $item['item_total'] = $item['unit_price'] * $item['quantity'];
+            $totalPrice += $item['item_total'];
+            $item['decoded_options'] = $item['options'] ? json_decode($item['options'], true) : null;
         }
 
         $data = [
@@ -50,10 +48,7 @@ class Checkout extends BaseController
 
         $userId = session()->get('id');
 
-        $items = $cartModel->select('cart.*, products.price')
-                          ->join('products', 'products.id = cart.product_id')
-                          ->where('user_id', $userId)
-                          ->findAll();
+        $items = $cartModel->where('user_id', $userId)->findAll();
 
         if (empty($items)) {
             return redirect()->to('cart')->with('error', 'Your cart is empty.');
@@ -61,7 +56,7 @@ class Checkout extends BaseController
 
         $totalAmount = 0;
         foreach ($items as $item) {
-            $totalAmount += $item['price'] * $item['quantity'];
+            $totalAmount += $item['unit_price'] * $item['quantity'];
         }
 
         $shippingAddress = $this->request->getPost('shipping_address');
@@ -92,7 +87,9 @@ class Checkout extends BaseController
                 'order_id' => $orderId,
                 'product_id' => $item['product_id'],
                 'quantity' => $item['quantity'],
-                'price' => $item['price']
+                'price' => $item['unit_price'], // Storing the customized price
+                'unit_price' => $item['unit_price'],
+                'options' => $item['options']
             ];
             if (!$orderItemModel->insert($itemData)) {
                 $db->transRollback();

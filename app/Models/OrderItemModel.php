@@ -11,7 +11,7 @@ class OrderItemModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $protectFields    = true;
-    protected $allowedFields    = ['order_id', 'product_id', 'quantity', 'price'];
+    protected $allowedFields    = ['order_id', 'product_id', 'quantity', 'price', 'options', 'unit_price'];
 
     // Validation
     protected $validationRules      = [

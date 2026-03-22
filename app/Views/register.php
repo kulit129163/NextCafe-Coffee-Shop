@@ -1,60 +1,61 @@
-<?= $this->extend('layout/auth') ?>
+<?= $this->extend('layout/split_auth') ?>
+
+<?php $this->setData([
+    'left_heading' => 'Join the<br>NextCafe Family',
+    'left_subtext'  => 'Create your account and start exploring our premium coffee collection. Your perfect cup is just a click away.'
+]) ?>
 
 <?= $this->section('content') ?>
 
-<div class="card border-0 shadow-lg rounded-5 p-4 p-md-5 bg-white">
-    <div class="text-center mb-5">
-        <div class="bg-light rounded-circle p-3 d-inline-block mb-3">
-            <i class="bi bi-person-plus fs-1 text-primary"></i>
+<h1 class="form-title">Create account</h1>
+<p class="form-subtitle">Join NextCafe and start your coffee journey today.</p>
+
+<?php if (session()->getFlashdata('errors')): ?>
+    <div class="auth-alert danger">
+        <i class="bi bi-exclamation-circle-fill"></i>
+        <ul class="mb-0 ps-3">
+            <?php foreach (session()->getFlashdata('errors') as $err): ?>
+                <li><?= $err ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>
+
+<div class="form-divider"><span>Fill in your details</span></div>
+
+<form action="<?= base_url('register') ?>" method="POST">
+
+    <div class="field-group">
+        <label class="field-label" for="reg-usr">Username</label>
+        <div class="field-wrap">
+            <i class="bi bi-person fi"></i>
+            <input type="text" id="reg-usr" name="username" placeholder="Choose a username" value="<?= old('username') ?>" required>
         </div>
-        <h2 class="fw-800">Create Account</h2>
-        <p class="text-muted">Join the NextCafe community today</p>
     </div>
 
-    <?php if (session()->getFlashdata('errors')): ?>
-        <div class="alert alert-danger border-0 rounded-4 small py-2">
-            <ul class="mb-0">
-                <?php foreach (session()->getFlashdata('errors') as $error): ?>
-                    <li><?= $error ?></li>
-                <?php endforeach; ?>
-            </ul>
+    <div class="field-group">
+        <label class="field-label" for="reg-email">Email Address</label>
+        <div class="field-wrap">
+            <i class="bi bi-envelope fi"></i>
+            <input type="email" id="reg-email" name="email" placeholder="Enter your email" value="<?= old('email') ?>" required>
         </div>
-    <?php endif; ?>
+    </div>
 
-    <form action="<?= base_url('register') ?>" method="POST">
-        <div class="mb-4">
-            <label class="form-label small fw-bold text-muted">USERNAME</label>
-            <div class="input-group bg-light rounded-pill px-3">
-                <span class="input-group-text bg-transparent border-0"><i class="bi bi-person text-muted"></i></span>
-                <input type="text" name="username" class="form-control bg-transparent border-0 py-2" placeholder="Choose a username" value="<?= old('username') ?>" required>
-            </div>
+    <div class="field-group">
+        <label class="field-label" for="reg-pw">Password</label>
+        <div class="field-wrap">
+            <i class="bi bi-lock fi"></i>
+            <input type="password" id="reg-pw" name="password" placeholder="Min. 8 characters" required>
+            <button type="button" class="toggle-pw" aria-label="Show/hide password">
+                <i class="bi bi-eye"></i>
+            </button>
         </div>
+    </div>
 
-        <div class="mb-4">
-            <label class="form-label small fw-bold text-muted">EMAIL ADDRESS</label>
-            <div class="input-group bg-light rounded-pill px-3">
-                <span class="input-group-text bg-transparent border-0"><i class="bi bi-envelope text-muted"></i></span>
-                <input type="email" name="email" class="form-control bg-transparent border-0 py-2" placeholder="Enter your email" value="<?= old('email') ?>" required>
-            </div>
-        </div>
-        
-        <div class="mb-5">
-            <label class="form-label small fw-bold text-muted">PASSWORD</label>
-            <div class="input-group bg-light rounded-pill px-3">
-                <span class="input-group-text bg-transparent border-0"><i class="bi bi-key text-muted"></i></span>
-                <input type="password" name="password" class="form-control bg-transparent border-0 py-2" placeholder="Create a strong password" required>
-            </div>
-            <p class="x-small text-muted mt-2 px-3">Must be at least 8 characters long.</p>
-        </div>
+    <button type="submit" class="btn-auth" style="margin-top:.6rem;">Create Account</button>
 
-        <div class="d-grid mb-4">
-            <button type="submit" class="btn btn-primary rounded-pill py-3 fw-bold shadow-sm">Create My Account</button>
-        </div>
+</form>
 
-        <div class="text-center">
-            <p class="small text-muted mb-0">Already have an account? <a href="<?= base_url('login') ?>" class="text-primary fw-bold text-decoration-none">Sign In</a></p>
-        </div>
-    </form>
-</div>
+<p class="auth-alt">Already have an account? <a href="<?= base_url('login') ?>">Sign In</a></p>
 
 <?= $this->endSection() ?>
