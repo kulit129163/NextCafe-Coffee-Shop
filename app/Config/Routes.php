@@ -72,6 +72,7 @@ $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
     $routes->get('products/edit/(:num)', 'Admin\Product::edit/$1');
     $routes->post('products/update/(:num)', 'Admin\Product::update/$1');
     $routes->get('products/delete/(:num)', 'Admin\Product::delete/$1');
+    $routes->get('products/toggleStatus/(:num)', 'Admin\Product::toggleStatus/$1');
     
     // Users
     $routes->get('users', 'Admin\User::index');

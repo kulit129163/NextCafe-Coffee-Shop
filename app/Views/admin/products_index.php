@@ -45,8 +45,10 @@
                 </td>
                 <td>
                     <div class="d-flex gap-1">
+                        <a href="<?= base_url('admin/products/toggleStatus/' . $product['id']) ?>" class="action-btn <?= $product['status'] === 'active' ? 'delete' : 'approve' ?>" title="<?= $product['status'] === 'active' ? 'Mark Sold Out' : 'Make Available' ?>">
+                            <i class="bi <?= $product['status'] === 'active' ? 'bi-x-circle' : 'bi-check-circle' ?>"></i>
+                        </a>
                         <a href="<?= base_url('admin/products/edit/' . $product['id']) ?>" class="action-btn edit" title="Edit"><i class="bi bi-pencil"></i></a>
-                        <a href="<?= base_url('admin/products/edit/' . $product['id']) ?>" class="action-btn approve" title="View"><i class="bi bi-eye"></i></a>
                         <a href="<?= base_url('admin/products/delete/' . $product['id']) ?>" class="action-btn delete" title="Delete" onclick="return confirm('Delete <?= esc($product['name']) ?>?')"><i class="bi bi-trash"></i></a>
                     </div>
                 </td>

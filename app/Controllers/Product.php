@@ -47,7 +47,7 @@ class Product extends BaseController
 
         $data = [
             'title' => 'Our Menu - NextCafe',
-            'products' => $productModel->findAll(),
+            'products' => $productModel->where('status', 'active')->findAll(),
             'categories' => $categoryModel->findAll(),
             'category_id' => $this->request->getGet('category'),
             'search_query' => $search,
@@ -62,7 +62,7 @@ class Product extends BaseController
         $productModel = new ProductModel();
         $product = $productModel->find($id);
 
-        if (!$product) {
+        if (!$product || $product['status'] !== 'active') {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 

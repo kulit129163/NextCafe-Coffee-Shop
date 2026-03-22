@@ -129,6 +129,22 @@ class Product extends BaseController
         return redirect()->to('admin/products')->with('success', 'Product successfully updated.');
     }
 
+    public function toggleStatus($id)
+    {
+        $productModel = new ProductModel();
+        $product = $productModel->find($id);
+
+        if (!$product) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+
+        $newStatus = ($product['status'] === 'active') ? 'sold_out' : 'active';
+        $productModel->update($id, ['status' => $newStatus]);
+
+        $msg = $newStatus === 'active' ? 'Product is now available.' : 'Product marked as sold out.';
+        return redirect()->to('admin/products')->with('success', $msg);
+    }
+
     public function delete($id)
     {
         $productModel = new ProductModel();
