@@ -51,10 +51,10 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="card border-0 shadow-sm rounded-5 p-5 h-100 bg-primary text-white hover-lift transition-all">
-            <div class="display-5 mb-4"><i class="bi bi-rocket-takeoff"></i></div>
+        <div class="card border-0 shadow-sm rounded-5 p-5 h-100 bg-white hover-lift transition-all">
+            <div class="display-5 text-primary mb-4"><i class="bi bi-rocket-takeoff"></i></div>
             <h3 class="fw-800 mb-3">Our Mission</h3>
-            <p class="opacity-75 mb-0">To deliver an unparalleled coffee experience through ethical sourcing, artisan roasting, and exceptional service.</p>
+            <p class="text-muted mb-0">To deliver an unparalleled coffee experience through ethical sourcing, artisan roasting, and exceptional service.</p>
         </div>
     </div>
     <div class="col-lg-4">
