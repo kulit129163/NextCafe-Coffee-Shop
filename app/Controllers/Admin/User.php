@@ -32,7 +32,8 @@ class User extends BaseController
             return redirect()->back()->with('error', 'You cannot demote yourself from the admin position.');
         }
 
-        $userModel->skipValidation(true)->update($id, [
+        $db = \Config\Database::connect();
+        $db->table('users')->where('id', $id)->update([
             'role' => $this->request->getPost('role')
         ]);
 
@@ -53,7 +54,8 @@ class User extends BaseController
         }
 
         $newStatus = ($user['status'] ?? 'active') === 'active' ? 'inactive' : 'active';
-        $userModel->skipValidation(true)->update($id, ['status' => $newStatus]);
+        $db = \Config\Database::connect();
+        $db->table('users')->where('id', $id)->update(['status' => $newStatus]);
 
         $msg = $newStatus === 'active' ? 'activated' : 'deactivated';
         return redirect()->to('admin/users')->with('success', "User account has been {$msg}.");
@@ -73,9 +75,10 @@ class User extends BaseController
         }
 
         try {
-            $userModel->delete($id);
+            $db = \Config\Database::connect();
+            $db->table('users')->where('id', $id)->delete();
             return redirect()->to('admin/users')->with('success', 'User deleted successfully.');
-        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+        } catch (\Exception $e) {
             return redirect()->to('admin/users')->with('error', 'Cannot delete user because they have existing orders or reviews.');
         }
     }
