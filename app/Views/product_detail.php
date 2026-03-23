@@ -62,6 +62,7 @@
                 <input type="hidden" id="base_price" value="<?= $product['price'] ?>">
                 
                 <!-- Customization Panel -->
+                <?php if (strtolower($product['category'] ?? '') !== 'pastries'): ?>
                 <div class="card border-0 rounded-4 bg-light p-4 mb-5 shadow-sm">
                     <div class="d-flex align-items-center mb-4">
                         <div class="bg-primary rounded-circle p-2 me-3 text-white d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
@@ -129,6 +130,7 @@
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
 
                 <!-- Price and Add to Cart -->
                 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -307,9 +309,11 @@
         const basePrice = parseFloat(document.getElementById('base_price').value);
         const qty = parseInt(document.getElementById('quantityInput').value);
         
-        // Size extra
+        let sizeExtra = 0;
         const sizeSelect = document.getElementById('cupSize');
-        const sizeExtra = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.extra || 0);
+        if (sizeSelect) {
+            sizeExtra = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.extra || 0);
+        }
         
         // Addons total
         let addonsTotal = 0;
@@ -320,10 +324,13 @@
         const unitPrice = basePrice + sizeExtra + addonsTotal;
         const total = unitPrice * qty;
         
-        document.getElementById('totalPriceDisplay').innerText = '₱' + unitPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('totalPriceDisplay').innerText = '₱' + total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
     }
 
-    document.getElementById('cupSize').addEventListener('change', calculateTotal);
+    const cupSizeEl = document.getElementById('cupSize');
+    if (cupSizeEl) {
+        cupSizeEl.addEventListener('change', calculateTotal);
+    }
     document.querySelectorAll('.addon-checkbox').forEach(cb => {
         cb.addEventListener('change', calculateTotal);
     });
