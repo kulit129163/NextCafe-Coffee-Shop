@@ -92,10 +92,14 @@ class Category extends BaseController
     public function delete($id)
     {
         $categoryModel = new CategoryModel();
+        $category = $categoryModel->find($id);
+
+        if (!$category) {
+            return redirect()->to('admin/categories')->with('error', 'Category not found.');
+        }
         
-        // Ensure no products are using this category before deleting (or just let DB constraint handle, but it's safer to check)
         $productModel = new \App\Models\ProductModel();
-        if ($productModel->where('category_id', $id)->countAllResults() > 0) {
+        if ($productModel->where('category', $category['slug'])->countAllResults() > 0) {
             return redirect()->to('admin/categories')->with('error', 'Cannot delete this category because it contains products.');
         }
 
