@@ -42,20 +42,25 @@ class User extends BaseController
 
     public function toggleStatus($id)
     {
+        log_message('error', 'toggleStatus hit for ID: ' . $id);
         $userModel = new UserModel();
         $user = $userModel->find($id);
 
         if (!$user) {
+            log_message('error', 'User not found in DB');
             return redirect()->back()->with('error', 'User not found.');
         }
 
         if ($id == session()->get('id')) {
+            log_message('error', 'Tried to deactivate self');
             return redirect()->back()->with('error', 'You cannot deactivate your own account.');
         }
 
         $newStatus = ($user['status'] ?? 'active') === 'active' ? 'inactive' : 'active';
+        log_message('error', 'Changing status to: ' . $newStatus);
         $db = \Config\Database::connect();
         $db->table('users')->where('id', $id)->update(['status' => $newStatus]);
+        log_message('error', 'DB update finished');
 
         $msg = $newStatus === 'active' ? 'activated' : 'deactivated';
         return redirect()->to('admin/users')->with('success', "User account has been {$msg}.");

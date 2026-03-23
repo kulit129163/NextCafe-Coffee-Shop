@@ -27,6 +27,9 @@ class Auth extends BaseController
                           ->first();
 
         if ($user && password_verify($password, $user['password'])) {
+            if (($user['status'] ?? 'active') !== 'active') {
+                return redirect()->back()->with('error', 'Your account has been deactivated. Please contact support.');
+            }
             $this->setUserSession($user);
             return redirect()->to('/');
         } else {

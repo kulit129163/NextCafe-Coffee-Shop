@@ -35,9 +35,17 @@
                     </div>
                 </td>
                 <td>
-                    <span class="status-badge <?= $u['role'] === 'admin' ? 'role-admin' : 'role-customer' ?>">
-                        <?= ucfirst($u['role']) ?>
-                    </span>
+                <td>
+                    <div class="d-flex flex-column gap-1 align-items-start">
+                        <span class="status-badge <?= $u['role'] === 'admin' ? 'role-admin' : 'role-customer' ?>">
+                            <?= ucfirst($u['role']) ?>
+                        </span>
+                        <?php if (($u['status'] ?? 'active') === 'active'): ?>
+                            <span class="status-badge status-delivered" style="font-size: 0.65rem; padding: 0.2rem 0.5rem;"><i class="bi bi-person-check-fill me-1"></i>Active</span>
+                        <?php else: ?>
+                            <span class="status-badge status-cancelled" style="font-size: 0.65rem; padding: 0.2rem 0.5rem;"><i class="bi bi-person-slash me-1"></i>Inactive</span>
+                        <?php endif; ?>
+                    </div>
                 </td>
                 <td style="color:var(--text-muted);font-size:0.8rem;"><?= date('n/j/Y', strtotime($u['created_at'])) ?></td>
                 <td>
