@@ -43,12 +43,22 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="d-flex gap-2">
-                                    <a href="<?= base_url('product/' . $review['product_id']) ?>" class="action-btn view" title="View on map" target="_blank">
-                                        <i class="bi bi-eye"></i>
+                                <div class="d-flex gap-2 align-items-center flex-wrap">
+                                    <a href="<?= base_url('product/' . $review['product_id']) ?>" 
+                                       title="View Product" target="_blank"
+                                       style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;text-decoration:none;border:1.5px solid #7c3aed;color:#7c3aed;background:rgba(124,58,237,.08);transition:all .2s;"
+                                       onmouseover="this.style.background='#7c3aed';this.style.color='#fff';"
+                                       onmouseout="this.style.background='rgba(124,58,237,.08)';this.style.color='#7c3aed';">
+                                        <i class="bi bi-eye-fill"></i> View
                                     </a>
-                                    <button type="button" class="action-btn delete" onclick="confirmDelete(<?= $review['id'] ?>)" title="Delete Review">
-                                        <i class="bi bi-trash"></i>
+
+                                    <button type="button" 
+                                            onclick="confirmDelete(<?= $review['id'] ?>)" 
+                                            title="Delete Review"
+                                            style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;cursor:pointer;border:1.5px solid #dc2626;color:#fff;background:#dc2626;transition:all .2s;box-shadow:0 2px 8px rgba(220,38,38,.3);"
+                                            onmouseover="this.style.background='#b91c1c';this.style.boxShadow='0 4px 14px rgba(185,28,28,.4)';"
+                                            onmouseout="this.style.background='#dc2626';this.style.boxShadow='0 2px 8px rgba(220,38,38,.3)';">
+                                        <i class="bi bi-trash-fill"></i> Delete
                                     </button>
                                 </div>
                             </td>
