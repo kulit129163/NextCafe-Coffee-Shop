@@ -80,6 +80,10 @@ $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
     $routes->get('products/delete/(:num)', 'Admin\Product::delete/$1');
     $routes->get('products/toggleStatus/(:num)', 'Admin\Product::toggleStatus/$1');
     
+    // Reviews
+    $routes->get('reviews', 'Admin\Review::index');
+    $routes->post('reviews/delete/(:num)', 'Admin\Review::delete/$1');
+    
     // Users
     $routes->get('users', 'Admin\User::index');
     $routes->post('users/updateRole/(:num)', 'Admin\User::updateRole/$1');
