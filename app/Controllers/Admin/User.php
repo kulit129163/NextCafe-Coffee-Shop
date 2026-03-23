@@ -32,7 +32,7 @@ class User extends BaseController
             return redirect()->back()->with('error', 'You cannot demote yourself from the admin position.');
         }
 
-        $userModel->update($id, [
+        $userModel->skipValidation(true)->update($id, [
             'role' => $this->request->getPost('role')
         ]);
 
@@ -53,7 +53,7 @@ class User extends BaseController
         }
 
         $newStatus = ($user['status'] ?? 'active') === 'active' ? 'inactive' : 'active';
-        $userModel->update($id, ['status' => $newStatus]);
+        $userModel->skipValidation(true)->update($id, ['status' => $newStatus]);
 
         $msg = $newStatus === 'active' ? 'activated' : 'deactivated';
         return redirect()->to('admin/users')->with('success', "User account has been {$msg}.");
@@ -72,7 +72,11 @@ class User extends BaseController
             return redirect()->back()->with('error', 'You cannot delete your own account.');
         }
 
-        $userModel->delete($id);
-        return redirect()->to('admin/users')->with('success', 'User deleted successfully.');
+        try {
+            $userModel->delete($id);
+            return redirect()->to('admin/users')->with('success', 'User deleted successfully.');
+        } catch (\CodeIgniter\Database\Exceptions\DatabaseException $e) {
+            return redirect()->to('admin/users')->with('error', 'Cannot delete user because they have existing orders or reviews.');
+        }
     }
 }
