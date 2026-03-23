@@ -55,19 +55,25 @@
                             <?php $isActive = ($u['status'] ?? 'active') === 'active'; ?>
 
                             <!-- Deactivate / Activate -->
-                            <a href="<?= base_url('admin/users/toggleStatus/' . $u['id']) ?>"
-                               title="<?= $isActive ? 'Deactivate Account' : 'Activate Account' ?>"
-                               onclick="return confirm('<?= $isActive ? 'Deactivate' : 'Activate' ?> this user\'s account?')"
-                               style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;text-decoration:none;transition:all .2s;
-                                      <?= $isActive ? 'border:1.5px solid #2563eb;color:#2563eb;background:rgba(37,99,235,.08);' : 'border:1.5px solid #16a34a;color:#16a34a;background:rgba(22,163,74,.08);' ?>"
-                               onmouseover="this.style.background='<?= $isActive ? '#2563eb' : '#16a34a' ?>';this.style.color='#fff';"
-                               onmouseout="this.style.background='<?= $isActive ? 'rgba(37,99,235,.08)' : 'rgba(22,163,74,.08)' ?>';this.style.color='<?= $isActive ? '#2563eb' : '#16a34a' ?>';">
-                                <?php if ($isActive): ?>
+                            <?php if ($isActive): ?>
+                                <button type="button" 
+                                   title="Deactivate Account"
+                                   onclick="confirmDeactivate(<?= $u['id'] ?>, '<?= esc(addslashes($u['username'])) ?>')"
+                                   style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;cursor:pointer;border:1.5px solid #2563eb;color:#2563eb;background:rgba(37,99,235,.08);transition:all .2s;"
+                                   onmouseover="this.style.background='#2563eb';this.style.color='#fff';"
+                                   onmouseout="this.style.background='rgba(37,99,235,.08)';this.style.color='#2563eb';">
                                     <i class="bi bi-person-slash"></i> Deactivate
-                                <?php else: ?>
+                                </button>
+                            <?php else: ?>
+                                <button type="button" 
+                                   title="Activate Account"
+                                   onclick="confirmActivate(<?= $u['id'] ?>, '<?= esc(addslashes($u['username'])) ?>')"
+                                   style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;cursor:pointer;border:1.5px solid #16a34a;color:#16a34a;background:rgba(22,163,74,.08);transition:all .2s;"
+                                   onmouseover="this.style.background='#16a34a';this.style.color='#fff';"
+                                   onmouseout="this.style.background='rgba(22,163,74,.08)';this.style.color='#16a34a';">
                                     <i class="bi bi-person-check"></i> Activate
-                                <?php endif; ?>
-                            </a>
+                                </button>
+                            <?php endif; ?>
 
                             <!-- Delete -->
                             <button type="button" 
@@ -118,6 +124,48 @@
     </div>
 </div>
 
+<!-- Deactivate Confirmation Modal -->
+<div class="modal fade" id="deactivateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-sm rounded-4">
+            <div class="modal-header border-0 bg-primary text-white p-4">
+                <h5 class="modal-title fw-700">Deactivate User</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5 text-center">
+                <i class="bi bi-person-slash display-1 text-primary opacity-50 mb-4 d-block"></i>
+                <h4 class="fw-700 mb-2">Deactivate Account?</h4>
+                <p class="text-muted mb-0">Are you sure you want to deactivate <strong><span id="deactivateUserName"></span></strong>? They will temporarily be unable to log in.</p>
+            </div>
+            <div class="modal-footer border-0 p-4 pt-0 justify-content-center">
+                <button type="button" class="btn btn-light rounded-pill px-4 fw-600 me-2" data-bs-dismiss="modal">Cancel</button>
+                <a href="#" id="deactivateConfirmBtn" class="btn btn-primary rounded-pill px-4 fw-700">Yes, Deactivate</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Activate Confirmation Modal -->
+<div class="modal fade" id="activateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-sm rounded-4">
+            <div class="modal-header border-0 bg-success text-white p-4">
+                <h5 class="modal-title fw-700">Activate User</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5 text-center">
+                <i class="bi bi-person-check display-1 text-success opacity-50 mb-4 d-block"></i>
+                <h4 class="fw-700 mb-2">Activate Account?</h4>
+                <p class="text-muted mb-0">You are about to restore access for <strong><span id="activateUserName"></span></strong>.</p>
+            </div>
+            <div class="modal-footer border-0 p-4 pt-0 justify-content-center">
+                <button type="button" class="btn btn-light rounded-pill px-4 fw-600 me-2" data-bs-dismiss="modal">Cancel</button>
+                <a href="#" id="activateConfirmBtn" class="btn btn-success rounded-pill px-4 fw-700">Yes, Activate</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 function filterUsers() {
     const q = document.getElementById('userSearch').value.toLowerCase();
@@ -130,6 +178,20 @@ function confirmDelete(id, username) {
     const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
     document.getElementById('deleteUserName').innerText = username;
     document.getElementById('deleteConfirmBtn').href = '<?= base_url('admin/users/delete/') ?>' + id;
+    modal.show();
+}
+
+function confirmDeactivate(id, username) {
+    const modal = new bootstrap.Modal(document.getElementById('deactivateModal'));
+    document.getElementById('deactivateUserName').innerText = username;
+    document.getElementById('deactivateConfirmBtn').href = '<?= base_url('admin/users/toggleStatus/') ?>' + id;
+    modal.show();
+}
+
+function confirmActivate(id, username) {
+    const modal = new bootstrap.Modal(document.getElementById('activateModal'));
+    document.getElementById('activateUserName').innerText = username;
+    document.getElementById('activateConfirmBtn').href = '<?= base_url('admin/users/toggleStatus/') ?>' + id;
     modal.show();
 }
 </script>
