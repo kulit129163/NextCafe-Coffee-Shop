@@ -70,14 +70,14 @@
                             </a>
 
                             <!-- Delete -->
-                            <a href="<?= base_url('admin/users/delete/' . $u['id']) ?>"
+                            <button type="button" 
                                title="Delete User"
-                               onclick="return confirm('Are you sure you want to permanently delete <?= esc($u['username']) ?>?')"
-                               style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;text-decoration:none;border:1.5px solid #dc2626;color:#fff;background:#dc2626;transition:all .2s;box-shadow:0 2px 8px rgba(220,38,38,.3);"
+                               onclick="confirmDelete(<?= $u['id'] ?>, '<?= esc(addslashes($u['username'])) ?>')"
+                               style="display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .85rem;border-radius:50px;font-size:.75rem;font-weight:700;letter-spacing:.4px;cursor:pointer;border:1.5px solid #dc2626;color:#fff;background:#dc2626;transition:all .2s;box-shadow:0 2px 8px rgba(220,38,38,.3);"
                                onmouseover="this.style.background='#b91c1c';this.style.boxShadow='0 4px 14px rgba(185,28,28,.4)';"
                                onmouseout="this.style.background='#dc2626';this.style.boxShadow='0 2px 8px rgba(220,38,38,.3)';">
                                 <i class="bi bi-trash-fill"></i> Delete
-                            </a>
+                            </button>
 
                         <?php else: ?>
                             <span style="font-size:.75rem;color:var(--text-muted);font-style:italic;">
@@ -97,12 +97,40 @@
     </table>
 </div>
 
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 bg-danger text-white p-4">
+                <h5 class="modal-title fw-700">Delete User</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-5 text-center">
+                <i class="bi bi-exclamation-triangle display-1 text-danger opacity-25 mb-4 d-block"></i>
+                <h4 class="fw-700 mb-2">Are you sure?</h4>
+                <p class="text-muted mb-0">You are about to permanently delete <strong><span id="deleteUserName"></span></strong>. This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer border-0 p-4 pt-0 justify-content-center">
+                <button type="button" class="btn btn-light rounded-pill px-4 fw-600 me-2" data-bs-dismiss="modal">Cancel</button>
+                <a href="#" id="deleteConfirmBtn" class="btn btn-danger rounded-pill px-4 fw-700">Delete Permanently</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 function filterUsers() {
     const q = document.getElementById('userSearch').value.toLowerCase();
     document.querySelectorAll('#usersTable tbody tr').forEach(row => {
         row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
     });
+}
+
+function confirmDelete(id, username) {
+    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    document.getElementById('deleteUserName').innerText = username;
+    document.getElementById('deleteConfirmBtn').href = '<?= base_url('admin/users/delete/') ?>' + id;
+    modal.show();
 }
 </script>
 

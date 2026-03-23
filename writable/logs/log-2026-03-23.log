@@ -1003,3 +1003,5 @@ WARNING - 2026-03-23 03:05:38 --> [DEPRECATED] strtolower(): Passing null to par
  6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  7 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
  8 SYSTEMPATH\rewrite.php(44): require_once('C:\\Users\\Martin Ore\\OneDrive - feutech.edu.ph\\Documents\\NextCafe-Coffee-Shop\\public\\index.php')
+DEBUG - 2026-03-23 03:07:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-03-23 03:07:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
