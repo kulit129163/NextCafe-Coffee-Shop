@@ -151,13 +151,18 @@ class Product extends BaseController
         $product = $productModel->find($id);
         
         if ($product) {
-            // Optionally delete image
-            if (!empty($product['image']) && file_exists(FCPATH . $product['image'])) {
-                @unlink(FCPATH . $product['image']);
+            try {
+                // Delete image if it exists
+                if (!empty($product['image']) && file_exists(FCPATH . $product['image'])) {
+                    @unlink(FCPATH . $product['image']);
+                }
+                $productModel->delete($id);
+                return redirect()->to('admin/products')->with('success', 'Product successfully deleted.');
+            } catch (\Exception $e) {
+                return redirect()->to('admin/products')->with('error', 'Cannot delete product because it has been ordered in the past. Mark it as Sold Out instead.');
             }
-            $productModel->delete($id);
         }
 
-        return redirect()->to('admin/products')->with('success', 'Product successfully deleted.');
+        return redirect()->to('admin/products')->with('error', 'Product not found.');
     }
 }
