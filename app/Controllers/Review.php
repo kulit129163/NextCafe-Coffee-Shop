@@ -19,6 +19,7 @@ class Review extends BaseController
         $rating = $this->request->getPost('rating');
         $comment = $this->request->getPost('comment');
 
+        /* 
         // Check if user has purchased this product
         $orderModel = new OrderModel();
         $hasPurchased = $orderModel->join('order_items', 'order_items.order_id = orders.id')
@@ -30,6 +31,7 @@ class Review extends BaseController
         if (!$hasPurchased) {
             return redirect()->back()->with('error', 'You can only review products you have successfully purchased.');
         }
+        */
 
         // Check if user already reviewed this product
         $reviewModel = new ReviewModel();

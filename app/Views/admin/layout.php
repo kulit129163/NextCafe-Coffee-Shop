@@ -389,6 +389,9 @@
             <a href="<?= base_url('admin/users') ?>" class="<?= strpos(current_url(), 'admin/users') !== false ? 'active' : '' ?>">
                 <i class="bi bi-people"></i> Users
             </a>
+            <a href="<?= base_url('admin/reviews') ?>" class="<?= strpos(current_url(), 'admin/reviews') !== false ? 'active' : '' ?>">
+                <i class="bi bi-chat-left-text"></i> Reviews
+            </a>
         </nav>
 
         <div class="sidebar-footer">

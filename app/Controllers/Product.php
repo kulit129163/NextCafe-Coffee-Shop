@@ -73,6 +73,8 @@ class Product extends BaseController
         // Check if current user can review
         $canReview = false;
         if (session()->get('isLoggedIn')) {
+            $canReview = true; // TEMPORARILY SET TO TRUE FOR TESTING (Relaxing purchase check)
+            /* 
             $userId = session()->get('id');
             $orderModel = new \App\Models\OrderModel();
             $canReview = $orderModel->join('order_items', 'order_items.order_id = orders.id')
@@ -80,6 +82,7 @@ class Product extends BaseController
                                     ->where('order_items.product_id', $id)
                                     ->where('orders.status', 'delivered')
                                     ->countAllResults() > 0;
+            */
         }
 
         $data = [
