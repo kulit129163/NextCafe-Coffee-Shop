@@ -23,6 +23,7 @@ $routes->group('', ['filter' => 'storefront'], static function ($routes) {
     $routes->get('menu', 'Product::index');
     $routes->get('product/(:num)', 'Product::view/$1');
     $routes->get('menu/product/(:num)', 'Product::view/$1');
+    $routes->post('review/submit', 'Review::submit');
 
     // Cart Routes
     $routes->get('cart', 'Cart::index');

@@ -57,15 +57,38 @@ class Product extends BaseController
     public function view($id)
     {
         $productModel = new ProductModel();
+        $reviewModel = new \App\Models\ReviewModel();
+        
         $product = $productModel->find($id);
 
         if (!$product || $product['status'] !== 'active') {
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
 
+        // Fetch reviews and rating
+        $reviews = $reviewModel->getReviewsWithUser($id);
+        $avgRating = $reviewModel->getAverageRating($id);
+        $reviewCount = $reviewModel->getReviewCount($id);
+
+        // Check if current user can review
+        $canReview = false;
+        if (session()->get('isLoggedIn')) {
+            $userId = session()->get('id');
+            $orderModel = new \App\Models\OrderModel();
+            $canReview = $orderModel->join('order_items', 'order_items.order_id = orders.id')
+                                    ->where('orders.user_id', $userId)
+                                    ->where('order_items.product_id', $id)
+                                    ->where('orders.status', 'delivered')
+                                    ->countAllResults() > 0;
+        }
+
         $data = [
             'title' => ($product['name'] ?? 'Product') . ' - NextCafe',
-            'product' => $product
+            'product' => $product,
+            'reviews' => $reviews,
+            'avgRating' => $avgRating,
+            'reviewCount' => $reviewCount,
+            'canReview' => $canReview
         ];
 
         return view('product_detail', $data);

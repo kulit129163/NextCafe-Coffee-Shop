@@ -46,13 +46,11 @@
             
             <div class="d-flex align-items-center mb-4">
                 <div class="text-warning me-2">
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
-                    <i class="bi bi-star-fill"></i>
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <i class="bi <?= $i <= ceil($avgRating) ? 'bi-star-fill' : 'bi-star' ?>"></i>
+                    <?php endfor; ?>
                 </div>
-                <span class="text-muted small fw-600">(124+ Reviews)</span>
+                <span class="text-muted small fw-600">(<?= $reviewCount ?> <?= $reviewCount == 1 ? 'Review' : 'Reviews' ?>)</span>
             </div>
 
             <p class="text-muted mb-5 fs-5">
@@ -150,40 +148,106 @@
                     <button type="submit" class="btn btn-dark rounded-pill py-3 fw-bold shadow-lg flex-grow-1 fs-5" style="background-color: #1A0D08; border: none;">
                         <i class="bi bi-cart3 me-2"></i> Add to My Order
                     </button>
-                    
-                    <div class="text-center mt-2">
-                        <a href="<?= base_url('cart') ?>" class="text-primary text-decoration-none fw-700 small text-uppercase letter-spacing-1">
-                            Proceed to Cart <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
 
-            <!-- Product Features -->
-            <div class="row g-4">
-                <div class="col-sm-6">
-                    <div class="d-flex align-items-center p-3 bg-white rounded-4 shadow-sm border">
-                        <div class="bg-light rounded-circle p-2 me-3 text-primary d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
-                            <i class="bi bi-truck fs-5"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold mb-0 small">Fast Delivery</h6>
-                            <small class="text-muted smaller">30-45 mins</small>
-                        </div>
+<!-- Reviews Section -->
+<div class="row mt-5 pt-5 border-top">
+    <div class="col-lg-8">
+        <?php if (session()->getFlashdata('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show rounded-4 border-0 shadow-sm mb-4" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i> <?= session()->getFlashdata('success') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
+        <?php if (session()->getFlashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible fade show rounded-4 border-0 shadow-sm mb-4" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> <?= session()->getFlashdata('error') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
+        <div class="d-flex align-items-center justify-content-between mb-5">
+            <div>
+                <h2 class="fw-800 mb-1">Customer Reviews</h2>
+                <div class="d-flex align-items-center">
+                    <div class="text-warning me-2 fs-4">
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <i class="bi <?= $i <= round($avgRating) ? 'bi-star-fill' : 'bi-star' ?>"></i>
+                        <?php endfor; ?>
                     </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="d-flex align-items-center p-3 bg-white rounded-4 shadow-sm border">
-                        <div class="bg-light rounded-circle p-2 me-3 text-primary d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
-                            <i class="bi bi-award fs-5"></i>
-                        </div>
-                        <div>
-                            <h6 class="fw-bold mb-0 small">Quality Guaranteed</h6>
-                            <small class="text-muted smaller">100% Organic</small>
-                        </div>
-                    </div>
+                    <span class="fw-800 fs-4 me-2"><?= number_format($avgRating, 1) ?></span>
+                    <span class="text-muted fw-600">based on <?= $reviewCount ?> reviews</span>
                 </div>
             </div>
+            <?php if ($canReview): ?>
+                <button class="btn btn-primary rounded-pill px-4 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#reviewForm">
+                    Write a Review
+                </button>
+            <?php endif; ?>
+        </div>
+
+        <?php if ($canReview): ?>
+            <div class="collapse mb-5" id="reviewForm">
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
+                    <h5 class="fw-800 mb-4">Share your experience</h5>
+                    <form action="<?= base_url('review/submit') ?>" method="POST">
+                        <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+                        <div class="mb-4">
+                            <label class="form-label text-muted small fw-800 text-uppercase mb-2">Rating</label>
+                            <div class="star-rating d-flex gap-2 fs-3 text-warning">
+                                <i class="bi bi-star pointer star-btn" data-value="1"></i>
+                                <i class="bi bi-star pointer star-btn" data-value="2"></i>
+                                <i class="bi bi-star pointer star-btn" data-value="3"></i>
+                                <i class="bi bi-star pointer star-btn" data-value="4"></i>
+                                <i class="bi bi-star pointer star-btn" data-value="5"></i>
+                                <input type="hidden" name="rating" id="ratingInput" value="5" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label text-muted small fw-800 text-uppercase mb-2">Comment</label>
+                            <textarea name="comment" class="form-control border-0 shadow-sm rounded-3 p-3" rows="4" placeholder="What did you think of this drink?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-dark rounded-pill px-5 fw-bold">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <!-- Reviews List -->
+        <div class="reviews-list">
+            <?php if (empty($reviews)): ?>
+                <div class="text-center py-5 bg-light rounded-4 border border-dashed">
+                    <i class="bi bi-chat-left-dots display-4 text-muted mb-3 d-block"></i>
+                    <p class="text-muted fw-600 mb-0">No reviews yet. Be the first to share your thoughts!</p>
+                </div>
+            <?php else: ?>
+                <?php foreach ($reviews as $review): ?>
+                    <div class="review-item mb-4 pb-4 border-bottom">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-primary rounded-circle p-2 me-3 text-white d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                    <?= substr($review['username'], 0, 1) ?>
+                                </div>
+                                <div>
+                                    <h6 class="fw-800 mb-0"><?= esc($review['username']) ?></h6>
+                                    <div class="text-warning smaller">
+                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                            <i class="bi <?= $i <= $review['rating'] ? 'bi-star-fill' : 'bi-star' ?>"></i>
+                                        <?php endfor; ?>
+                                        <span class="text-muted ms-2 smaller fw-500"><?= date('M d, Y', strtotime($review['created_at'])) ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted mb-0 fw-500"><?= esc($review['comment']) ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </div>
@@ -223,6 +287,10 @@
         font-size: 0.7rem;
         vertical-align: middle;
     }
+
+    .star-btn { transition: transform 0.2s ease; }
+    .star-btn:hover { transform: scale(1.2); }
+    .star-btn.bi-star-fill { color: #ffc107; }
 </style>
 
 <script>
@@ -258,6 +326,27 @@
     document.getElementById('cupSize').addEventListener('change', calculateTotal);
     document.querySelectorAll('.addon-checkbox').forEach(cb => {
         cb.addEventListener('change', calculateTotal);
+    });
+
+    // Star Rating Logic
+    document.querySelectorAll('.star-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const val = this.dataset.value;
+            document.getElementById('ratingInput').value = val;
+            
+            document.querySelectorAll('.star-btn').forEach((star, index) => {
+                if (index < val) {
+                    star.classList.remove('bi-star');
+                    star.classList.add('bi-star-fill');
+                } else {
+                    star.classList.remove('bi-star-fill');
+                    star.classList.add('bi-star');
+                }
+            });
+        });
+
+        // Initialize with 5 stars
+        if (btn.dataset.value == 5) btn.click();
     });
 
     // Initial calculation
